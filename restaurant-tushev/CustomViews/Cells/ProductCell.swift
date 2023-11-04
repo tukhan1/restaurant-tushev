@@ -9,8 +9,6 @@ import UIKit
 import SnapKit
 
 class ProductCell: UICollectionViewCell, ReusableView {
-
-    var
     
     private var product: Product?
 
