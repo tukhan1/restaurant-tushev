@@ -14,20 +14,6 @@ final class OrderVC: UIViewController {
     
     private let miniCartView = MiniCartView()
     
-    func addToCart(product: Product) {
-        cartManager.addToCart(product)
-        updateMiniCartView()
-    }
-    
-    func removeFromCart(product: Product) {
-        cartManager.removeFromCart(product)
-        updateMiniCartView()
-    }
-    
-    func presentCart() {
-        print("lets go")
-    }
-    
     private let menuSerivece = MenuService()
     
     private var menuData: [MenuSection] = []
@@ -61,6 +47,7 @@ final class OrderVC: UIViewController {
         configure()
         makeConstraints()
         getMenu()
+        title = "Меню"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -87,6 +74,12 @@ final class OrderVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubviews(collectionView, miniCartView)
+        miniCartView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(presentCart)))
+    }
+    
+    @objc private func presentCart() {
+        let cartVC = CartVC(products: cartManager.items)
+        navigationController?.pushViewController(cartVC, animated: true)
     }
     
     private func makeConstraints() {
@@ -122,10 +115,26 @@ extension OrderVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell: ProductCell = collectionView.dequeueReusableCell(for: indexPath)
         let product = menuData[indexPath.section].products[indexPath.row]
         cell.setCell(for: product)
-        cell.onBuyButtonTapped = { [weak self] in
-            guard let self = self else { return }
-                self.addToCart(product: product)
-            }
+        cell.addToCartAction = {
+            cell.isInCart = true
+            cell.updateCartButton(isInCart: true)
+            self.addToCart(product: product)
+        }
+        cell.removeFromCartAction = {
+            cell.isInCart = false
+            cell.updateCartButton(isInCart: false)
+            self.removeFromCart(product: product)
+        }
         return cell
+    }
+    
+    private func addToCart(product: Product) {
+        cartManager.addToCart(product)
+        updateMiniCartView()
+    }
+    
+    private func removeFromCart(product: Product) {
+        cartManager.removeFromCart(product)
+        updateMiniCartView()
     }
 }

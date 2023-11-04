@@ -61,6 +61,7 @@
 		77C59F1F2AF5329100A31B32 /* ProductInCartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F1E2AF5329100A31B32 /* ProductInCartCell.swift */; };
 		77C59F242AF5668400A31B32 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F232AF5668400A31B32 /* MainVC.swift */; };
 		77E9EBB22AF574C7003CB05D /* Money+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB12AF574C7003CB05D /* Money+Ext.swift */; };
+		77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB52AF690BF003CB05D /* DeliverView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +92,7 @@
 		77C59F1E2AF5329100A31B32 /* ProductInCartCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductInCartCell.swift; sourceTree = "<group>"; };
 		77C59F232AF5668400A31B32 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		77E9EBB12AF574C7003CB05D /* Money+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Money+Ext.swift"; sourceTree = "<group>"; };
+		77E9EBB52AF690BF003CB05D /* DeliverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +142,6 @@
 				77C59F232AF5668400A31B32 /* MainVC.swift */,
 				77C59F272AF56D5B00A31B32 /* Delivery */,
 				7777B0412AEAA375005F8573 /* ProfileVC.swift */,
-				77C59F1C2AF52DD700A31B32 /* CartVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -162,6 +163,7 @@
 				77C59F202AF5334B00A31B32 /* Cells */,
 				7777AFF72AE920A6005F8573 /* CustomLabel.swift */,
 				7777B0042AE9269B005F8573 /* CustomButton.swift */,
+				77E9EBB52AF690BF003CB05D /* DeliverView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -258,6 +260,7 @@
 			isa = PBXGroup;
 			children = (
 				7777B03D2AEAA0FC005F8573 /* OrderVC.swift */,
+				77C59F1C2AF52DD700A31B32 /* CartVC.swift */,
 			);
 			path = Delivery;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				7777B0462AEAA714005F8573 /* ProductCell.swift in Sources */,
 				7777B0052AE9269B005F8573 /* CustomButton.swift in Sources */,
 				77E9EBB22AF574C7003CB05D /* Money+Ext.swift in Sources */,
+				77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */,
 				7777B0442AEAA508005F8573 /* UIHelper.swift in Sources */,
 				77C59F242AF5668400A31B32 /* MainVC.swift in Sources */,
 				77C59F192AF517FA00A31B32 /* CartManager.swift in Sources */,

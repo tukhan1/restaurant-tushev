@@ -10,7 +10,9 @@ import SnapKit
 
 class ProductCell: UICollectionViewCell, ReusableView {
     
-    var onBuyButtonTapped: (() -> Void)?
+    var addToCartAction: (() -> Void)?
+    var removeFromCartAction: (() -> Void)?
+    var isInCart: Bool = false
     
     private var product: Product?
 
@@ -26,7 +28,7 @@ class ProductCell: UICollectionViewCell, ReusableView {
     private let productWeightLabel = CustomLabel(font: .promt, textAligment: .left)
     private let buyButton: CustomButton = CustomButton(title: "В корзину",
                                                        background: UIColor(named: "clouds"))
-
+    
     override init(frame: CGRect) {
         super.init(frame: .zero)
         configure()
@@ -42,7 +44,7 @@ class ProductCell: UICollectionViewCell, ReusableView {
         productCostLabel.text = product.cost + " Р"
         productTitleLabel.text = product.title
         productWeightLabel.text = product.weight + " g"
-        buyButton.setTitle("В корзину", for: .normal)
+        updateCartButton(isInCart: isInCart)
         downloadImage(fromUrl: product.imageUrl)
     }
 
@@ -62,14 +64,24 @@ class ProductCell: UICollectionViewCell, ReusableView {
     }
 
     @objc private func buyButtonTapped() {
-        guard let product = self.product else { return }
-        updateButtonUI()
-        onBuyButtonTapped?()
+        if buyButton.currentTitle == "В корзину" {
+                    addToCartAction?()
+                } else {
+                    removeFromCartAction?()
+                }
     }
+    
+    func updateCartButton(isInCart: Bool) {
+            if isInCart {
+                buyButton.setTitle("Убрать", for: .normal)
+            } else {
+                buyButton.setTitle("В корзину", for: .normal)
+            }
+        }
 
-    private func updateButtonUI() {
-        buyButton.setTitle("Убрать", for: .normal)
-        buyButton.backgroundColor = .lightGray
+    private func updateButtonUI(_ inCart: Bool) {
+        inCart ? buyButton.setTitle("Убрать", for: .normal): buyButton.setTitle("Добавить", for: .normal)
+        buyButton.backgroundColor = inCart ? .lightGray: UIColor(named: "clouds")
     }
 
     private func makeConstraints() {

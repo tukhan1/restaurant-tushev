@@ -9,11 +9,11 @@ import UIKit
 
 class CartManager {
     
+    var items: [Product] = []
+    
     var itemsCount: Int {
         return items.count
     }
-    
-    private var items: [Product] = []
     
     func calculateTotalAmount() -> Double {
         return items.reduce(0.0) { total, product in
