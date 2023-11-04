@@ -10,6 +10,8 @@ import SnapKit
 
 class ProductCell: UICollectionViewCell, ReusableView {
     
+    var onBuyButtonTapped: (() -> Void)?
+    
     private var product: Product?
 
     private let productImageView: UIImageView = {
@@ -56,19 +58,18 @@ class ProductCell: UICollectionViewCell, ReusableView {
         backgroundColor = UIColor(named: "silver")
         layer.cornerRadius = 15
         productTitleLabel.numberOfLines = 0
-        buyButton.addTarget(nil, action: #selector(buyButtonTapped), for: .touchUpInside)
+        buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
     }
 
     @objc private func buyButtonTapped() {
         guard let product = self.product else { return }
-        CartManager.shared.addToCart(product)
         updateButtonUI()
+        onBuyButtonTapped?()
     }
 
     private func updateButtonUI() {
-        buyButton.setTitle("Добавлено", for: .normal)
+        buyButton.setTitle("Убрать", for: .normal)
         buyButton.backgroundColor = .lightGray
-        buyButton.isUserInteractionEnabled = false
     }
 
     private func makeConstraints() {

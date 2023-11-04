@@ -10,7 +10,23 @@ import SnapKit
 
 final class OrderVC: UIViewController {
     
-    var cartManager: CartManager?
+    private let cartManager = CartManager()
+    
+    private let miniCartView = MiniCartView()
+    
+    func addToCart(product: Product) {
+        cartManager.addToCart(product)
+        updateMiniCartView()
+    }
+    
+    func removeFromCart(product: Product) {
+        cartManager.removeFromCart(product)
+        updateMiniCartView()
+    }
+    
+    func presentCart() {
+        print("lets go")
+    }
     
     private let menuSerivece = MenuService()
     
@@ -32,7 +48,13 @@ final class OrderVC: UIViewController {
         return collectionView
     }()
     
-    private let miniCartView: MiniCartView = MiniCartView(frame: .zero)
+    private func updateMiniCartView() {
+        if cartManager.itemsCount > 0 {
+            miniCartView.isHidden = false
+        } else {
+            miniCartView.isHidden = true
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +62,12 @@ final class OrderVC: UIViewController {
         makeConstraints()
         getMenu()
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateMiniCartView()
+    }
+    
     private func getMenu() {
         menuSerivece.getFullMenu { result in
             switch result {
@@ -56,36 +83,20 @@ final class OrderVC: UIViewController {
     }
     
     private func configure() {
-        setupSearchButton()
         collectionView.register(SectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "SectionHeader")
         collectionView.delegate = self
         collectionView.dataSource = self
         view.addSubviews(collectionView, miniCartView)
     }
     
-    private func setupSearchButton() {
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchButtonTapped))
-        searchButton.tintColor = .black
-        navigationItem.rightBarButtonItem = searchButton
-    }
-    
-    @objc private func searchButtonTapped() {
-        let searchVC = SearchVC()
-        navigationController?.pushViewController(searchVC, animated: true)
-    }
-    
     private func makeConstraints() {
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(view.snp.top)
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-            make.bottom.equalTo(view.snp.bottom)
+            make.edges.equalTo(view.snp.edges)
         }
         miniCartView.snp.makeConstraints { make in
-            make.left.equalTo(view.snp.left)
-            make.right.equalTo(view.snp.right)
-            make.height.equalTo(0)
-            make.bottom.equalTo(view.snp.bottom)
+            make.right.equalTo(view.snp.right).offset(-5)
+            make.height.width.equalTo(MiniCartSize.weightAndHeight)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-5)
         }
     }
 }
@@ -111,6 +122,10 @@ extension OrderVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell: ProductCell = collectionView.dequeueReusableCell(for: indexPath)
         let product = menuData[indexPath.section].products[indexPath.row]
         cell.setCell(for: product)
+        cell.onBuyButtonTapped = { [weak self] in
+            guard let self = self else { return }
+                self.addToCart(product: product)
+            }
         return cell
     }
 }
