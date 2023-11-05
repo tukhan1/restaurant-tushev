@@ -16,6 +16,8 @@ enum NWError: String, Error {
 
 final class MenuService {
     
+    static let shared = MenuService()
+    
     func getFullMenu(completion: @escaping (Result<[MenuSection], Error>) -> Void) {
         getCategories { categoryResult in
             switch categoryResult {
@@ -48,8 +50,55 @@ final class MenuService {
         }
     }
     
+    func fetchBanners(completion: @escaping (Result<[Banner], Error>) -> Void) {
+        let bannersCollection = Firestore.firestore().collection("banners")
+        bannersCollection.getDocuments { snap, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            guard let documents = snap?.documents else {
+                completion(.failure(NWError.invalidData))
+                return
+            }
+ 
+            let banners = documents.compactMap { document -> Banner? in
+                let data = document.data()
+                return Banner(imageUrl: data["imageUrl"] as? String ?? "",
+                              actionUrl: data["actionUrl"] as? String,
+                              title: data["title"] as? String,
+                              description: data["description"] as? String)
+            }
+            completion(.success(banners))
+        }
+    }
+
+    func fetchChefRecommendations(completion: @escaping (Result<[MasterClass], Error>) -> Void) {
+        let recommendationsCollection = Firestore.firestore().collection("chef_recommendations")
+        recommendationsCollection.getDocuments { snap, error in
+            if let error = error {
+                completion(.failure(error))
+            }
+            
+            guard let documents = snap?.documents else {
+                completion(.failure(NWError.invalidData))
+                return
+            }
+            
+            let chefRecommendations = documents.compactMap { document -> MasterClass? in
+                let data = document.data()
+                return MasterClass(title: data["title"] as? String ?? "",
+                            description: data["description"] as? String ?? "",
+                            imageUrl: data["imageUrl"] as? String ?? "",
+                            date: data["date"] as? String ?? "")
+            }
+            completion(.success(chefRecommendations))
+        }
+    }
+    
     private func getCategories(completion: @escaping (Result<[MenuCategory], Error>) -> Void) {
-        Firestore.firestore().collection(K.menu).getDocuments { snapshot, error in
+        let menuCollection = Firestore.firestore().collection(K.menu)
+        menuCollection.getDocuments { snapshot, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -66,7 +115,6 @@ final class MenuService {
                 let menuTitle = data["title"] as? String ?? ""
                 return MenuCategory(title: menuTitle, categoryId: id)
             }
-            
             completion(.success(categories))
         }
     }
@@ -92,7 +140,6 @@ final class MenuService {
                     imageUrl: data["imageUrl"] as? String ?? ""
                 )
             }
-            
             completion(.success(products))
         }
     }

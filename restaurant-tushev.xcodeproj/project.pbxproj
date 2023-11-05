@@ -62,6 +62,8 @@
 		77C59F242AF5668400A31B32 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F232AF5668400A31B32 /* MainVC.swift */; };
 		77E9EBB22AF574C7003CB05D /* Money+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB12AF574C7003CB05D /* Money+Ext.swift */; };
 		77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB52AF690BF003CB05D /* DeliverView.swift */; };
+		77E9EBB82AF6AA73003CB05D /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB72AF6AA73003CB05D /* BannerCell.swift */; };
+		77E9EBBA2AF6AA91003CB05D /* ChefRecommendationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB92AF6AA91003CB05D /* ChefRecommendationCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +95,8 @@
 		77C59F232AF5668400A31B32 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		77E9EBB12AF574C7003CB05D /* Money+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Money+Ext.swift"; sourceTree = "<group>"; };
 		77E9EBB52AF690BF003CB05D /* DeliverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverView.swift; sourceTree = "<group>"; };
+		77E9EBB72AF6AA73003CB05D /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
+		77E9EBB92AF6AA91003CB05D /* ChefRecommendationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChefRecommendationCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +240,8 @@
 				77C59F0A2AF3F70F00A31B32 /* SectionHeader.swift */,
 				77C59F1E2AF5329100A31B32 /* ProductInCartCell.swift */,
 				7777B0452AEAA714005F8573 /* ProductCell.swift */,
+				77E9EBB72AF6AA73003CB05D /* BannerCell.swift */,
+				77E9EBB92AF6AA91003CB05D /* ChefRecommendationCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -388,6 +394,8 @@
 				77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */,
 				7777B0442AEAA508005F8573 /* UIHelper.swift in Sources */,
 				77C59F242AF5668400A31B32 /* MainVC.swift in Sources */,
+				77E9EBBA2AF6AA91003CB05D /* ChefRecommendationCell.swift in Sources */,
+				77E9EBB82AF6AA73003CB05D /* BannerCell.swift in Sources */,
 				77C59F192AF517FA00A31B32 /* CartManager.swift in Sources */,
 				77C59F152AF5122800A31B32 /* MiniCartView.swift in Sources */,
 				779F7BC62AE82BBE00B89127 /* AppDelegate.swift in Sources */,

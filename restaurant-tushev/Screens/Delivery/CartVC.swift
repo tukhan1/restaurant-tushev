@@ -6,7 +6,6 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     private let tableView: UITableView = UITableView(frame: .zero, style: .plain)
     private let deliverView = DeliverView(frame: .zero)
     
-    // Здесь должен быть ваш массив продуктов в корзине
     private var cartItems: [Product] = []
     
     init(products: [Product]) {
@@ -28,6 +27,7 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         title = "Корзина"
         view.backgroundColor = .white
         // Инициализация и настройка таблицы
+        tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(ProductInCartCell.self)
@@ -62,7 +62,6 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc private func deliverTapped() {
-        // Здесь должна быть логика для обработки нажатия на кнопку доставки
         print("Заказ на доставку оформлен")
     }
     

@@ -14,8 +14,6 @@ final class OrderVC: UIViewController {
     
     private let miniCartView = MiniCartView()
     
-    private let menuSerivece = MenuService()
-    
     private var menuData: [MenuSection] = []
     
     private let collectionView: UICollectionView = {
@@ -47,7 +45,6 @@ final class OrderVC: UIViewController {
         configure()
         makeConstraints()
         getMenu()
-        title = "Меню"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,7 +53,7 @@ final class OrderVC: UIViewController {
     }
     
     private func getMenu() {
-        menuSerivece.getFullMenu { result in
+        MenuService.shared.getFullMenu { result in
             switch result {
             case .success(let menu):
                 self.menuData = menu

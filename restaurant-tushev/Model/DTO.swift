@@ -27,3 +27,17 @@ struct MenuSection {
     let title: String
     let products: [Product]
 }
+
+struct Banner: Codable {
+    let imageUrl: String
+    let actionUrl: String?
+    let title: String?
+    let description: String?
+}
+
+struct MasterClass: Codable {
+    let title: String
+    let description: String
+    let imageUrl: String
+    let date: String
+}
