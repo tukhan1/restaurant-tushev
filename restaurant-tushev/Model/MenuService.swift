@@ -65,9 +65,8 @@ final class MenuService {
             let banners = documents.compactMap { document -> Banner? in
                 let data = document.data()
                 return Banner(imageUrl: data["imageUrl"] as? String ?? "",
-                              actionUrl: data["actionUrl"] as? String,
-                              title: data["title"] as? String,
-                              description: data["description"] as? String)
+                              title: data["title"] as? String ?? "",
+                              description: data["description"] as? String ?? "")
             }
             completion(.success(banners))
         }
@@ -90,7 +89,8 @@ final class MenuService {
                 return MasterClass(title: data["title"] as? String ?? "",
                             description: data["description"] as? String ?? "",
                             imageUrl: data["imageUrl"] as? String ?? "",
-                            date: data["date"] as? String ?? "")
+                            date: data["date"] as? String ?? "",
+                            recipeUrl: data["recipeUrl"] as? String)
             }
             completion(.success(chefRecommendations))
         }

@@ -30,9 +30,8 @@ struct MenuSection {
 
 struct Banner: Codable {
     let imageUrl: String
-    let actionUrl: String?
-    let title: String?
-    let description: String?
+    let title: String
+    let description: String
 }
 
 struct MasterClass: Codable {
@@ -40,4 +39,5 @@ struct MasterClass: Codable {
     let description: String
     let imageUrl: String
     let date: String
+    let recipeUrl: String?
 }

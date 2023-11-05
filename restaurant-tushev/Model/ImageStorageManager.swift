@@ -31,11 +31,11 @@ class ImageStorageManager {
                   error == nil,
                   let response = response as? HTTPURLResponse, response.statusCode == 200,
                   let safeData = data,
-                  let image = UIImage(data: safeData) else {
+                  let image = UIImage(data: safeData)?.jpegData(compressionQuality: 0.5) else {
                 complition(nil)
                 return
             }
-
+            guard let image = UIImage(data: image) else { complition(nil) ; return }
             self.cache.setObject(image, forKey: cacheKey)
             complition(image)
         }

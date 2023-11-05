@@ -63,6 +63,8 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @objc private func deliverTapped() {
         print("Заказ на доставку оформлен")
+        let checkoutVC = CheckoutVC(totalCost: cartItems.reduce(0) { $0 + ($1.cost.parsePrice() ?? 0.0) }, loyaltyPoints: 100)
+        navigationController?.pushViewController(checkoutVC, animated: true)
     }
     
     // MARK: - UITableViewDelegate & UITableViewDataSource
@@ -81,5 +83,9 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100 
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }

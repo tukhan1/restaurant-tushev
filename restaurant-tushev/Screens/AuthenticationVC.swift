@@ -6,17 +6,28 @@
 //
 
 import UIKit
-import SnapKit
 import FirebaseAuth
+import FirebaseFirestore
 
 class AuthenticationVC: UIViewController {
     
-    private let enterPhoneLabel: CustomLabel = {
-        return CustomLabel(font: .title1, text: "Введите свой номер")
-    }()
+    private let enterPhoneLabel = CustomLabel(font: .title1, text: "Введите свой номер")
+    private let enterNameLabel = CustomLabel(font: .title1, text: "Введите ваше имя")
     
     private let phoneTextField: UITextField = {
-        let textField = UITextField(frame: .zero)
+        let textField = UITextField()
+        textField.placeholder = "Номер телефона"
+        textField.layer.cornerRadius = 10
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.textAlignment = .center
+        textField.keyboardType = .phonePad
+        return textField
+    }()
+    
+    private let nameTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Имя"
         textField.layer.cornerRadius = 10
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor.black.cgColor
@@ -24,10 +35,7 @@ class AuthenticationVC: UIViewController {
         return textField
     }()
     
-    private var nextButton: CustomButton = {
-        let button = CustomButton(title: "Далее")
-        return button
-    }()
+    private let nextButton = CustomButton(title: "Далее")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,49 +45,103 @@ class AuthenticationVC: UIViewController {
     
     private func configure() {
         view.backgroundColor = .systemBackground
-        view.addSubviews(enterPhoneLabel, phoneTextField, nextButton)
-        nextButton.addTarget(nil, action: #selector(sendSmsVerification), for: .touchUpInside)
+        view.addSubviews(enterPhoneLabel, phoneTextField, enterNameLabel, nameTextField, nextButton)
+        nextButton.addTarget(self, action: #selector(sendSmsVerification), for: .touchUpInside)
     }
     
     @objc private func sendSmsVerification() {
-        // Добавить проверку формата
-        print(phoneTextField.text ?? "")
-        PhoneAuthProvider.provider()
-            .verifyPhoneNumber(phoneTextField.text ?? "", uiDelegate: nil) {[weak self] verificationID, error in
-                guard let self = self else { return }
-                if let error = error {
-                    print(error)
-                    return
-                }
-                UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
-                let alert = self.createSmsAlertController()
-                self.present(alert, animated: true)
+        guard let phoneNumber = phoneTextField.text, !phoneNumber.isEmpty,
+              let name = nameTextField.text, !name.isEmpty else {
+            print("Необходимо ввести имя и номер телефона")
+            return
+        }
+        
+        // Проверяем, существует ли уже пользователь
+        let db = Firestore.firestore()
+        db.collection("users").whereField("phoneNumber", isEqualTo: phoneNumber).getDocuments { [weak self] (querySnapshot, err) in
+            if let err = err {
+                print("Ошибка при получении данных: \(err)")
+            } else if querySnapshot!.documents.isEmpty {
+                // Пользователь новый, отправляем СМС
+                self?.verifyPhoneNumber(phoneNumber)
+            } else {
+                // Пользователь существует, пропускаем экран регистрации
+                self?.dismiss(animated: true, completion: nil)
             }
+        }
     }
     
-    private func makeConstraints() {
-        phoneTextField.snp.makeConstraints { make in
-            make.centerY.equalTo(view.snp.centerY)
-            make.centerX.equalTo(view.snp.centerX)
-            make.width.equalTo(view.snp.width).multipliedBy(0.8)
-            make.height.equalTo(50)
-        }
-        enterPhoneLabel.snp.makeConstraints { make in
-            make.centerX.equalTo(view.snp.centerX)
-            make.bottom.equalTo(phoneTextField.snp.top).offset(-5)
-            make.width.equalTo(view.snp.width).multipliedBy(0.8)
-            make.height.equalTo(40)
-        }
-        nextButton.snp.makeConstraints { make in
-            make.top.equalTo(phoneTextField.snp.bottom).offset(20)
-            make.centerX.equalTo(view.snp.centerX)
-            make.height.equalTo(40)
-            make.width.equalTo(160)
+    private func verifyPhoneNumber(_ phoneNumber: String) {
+        PhoneAuthProvider.provider().verifyPhoneNumber(phoneNumber, uiDelegate: nil) { [weak self] verificationID, error in
+            guard let self = self else { return }
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+            UserDefaults.standard.set(verificationID, forKey: "authVerificationID")
+            let alert = self.createSmsAlertController()
+            self.present(alert, animated: true)
         }
     }
     
     func authGood() {
-        print("YEAAAAAH BOY")
+        guard let authResult = Auth.auth().currentUser else {
+            print("Ошибка: пользователь не найден.")
+            return
+        }
+        
+        let userData: [String: Any] = [
+            "uid": authResult.uid,
+            "phoneNumber": authResult.phoneNumber ?? "",
+            "name": nameTextField.text ?? ""
+        ]
+        
+        let db = Firestore.firestore()
+        db.collection("users").document(authResult.uid).setData(userData) { error in
+            if let error = error {
+                print("Ошибка при добавлении пользователя в Firestore: \(error)")
+            } else {
+                print("Пользователь успешно добавлен в Firestore.")
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+    }
+    
+    private func makeConstraints() {
+        enterPhoneLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(view.snp.width).multipliedBy(0.8)
+            make.height.equalTo(40)
+        }
+        
+        phoneTextField.snp.makeConstraints { make in
+            make.top.equalTo(enterPhoneLabel.snp.bottom).offset(20)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(view.snp.width).multipliedBy(0.8)
+            make.height.equalTo(50)
+        }
+        
+        enterNameLabel.snp.makeConstraints { make in
+            make.top.equalTo(phoneTextField.snp.bottom).offset(20)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(view.snp.width).multipliedBy(0.8)
+            make.height.equalTo(40)
+        }
+        
+        nameTextField.snp.makeConstraints { make in
+            make.top.equalTo(enterNameLabel.snp.bottom).offset(20)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(view.snp.width).multipliedBy(0.8)
+            make.height.equalTo(50)
+        }
+        
+        nextButton.snp.makeConstraints { make in
+            make.top.equalTo(nameTextField.snp.bottom).offset(30)
+            make.centerX.equalTo(view.snp.centerX)
+            make.width.equalTo(160)
+            make.height.equalTo(50)
+        }
     }
 }
 

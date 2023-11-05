@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import FirebaseAuth
 
 class MainVC: UIViewController {
     
@@ -27,6 +28,7 @@ class MainVC: UIViewController {
         pageControl.numberOfPages = banners.count
         pageControl.currentPageIndicatorTintColor = .white
         pageControl.pageIndicatorTintColor = .lightGray
+        pageControl.isUserInteractionEnabled = false
         return pageControl
     }()
     
@@ -63,6 +65,16 @@ class MainVC: UIViewController {
         return label
     }()
     
+    private lazy var bookingButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Бронировать столик", for: .normal)
+        button.backgroundColor = .systemBlue
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 10
+        button.addTarget(self, action: #selector(bookingButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +82,12 @@ class MainVC: UIViewController {
         fetchBanners()
         fetchChefRecommendations()
         fetchLoyaltyPoints()
+
+        if Auth.auth().currentUser == nil {
+            let authVC = AuthenticationVC()
+            authVC.modalPresentationStyle = .overFullScreen
+            self.present(authVC, animated: false)
+        }
     }
     
     // MARK: - Setup
@@ -78,7 +96,7 @@ class MainVC: UIViewController {
         navigationItem.title = "Главная"
         
         view.addSubview(scrollView)
-        scrollView.addSubviews(bannerCollectionView, pageControl, loyaltyPointsLabel, chefRecommendationTableView)
+        scrollView.addSubviews(bannerCollectionView, pageControl, loyaltyPointsLabel, bookingButton, chefRecommendationTableView)
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
@@ -104,14 +122,19 @@ class MainVC: UIViewController {
             make.height.equalTo(50)
         }
         
-        chefRecommendationTableView.snp.makeConstraints { make in
+        bookingButton.snp.makeConstraints { make in
             make.top.equalTo(loyaltyPointsLabel.snp.bottom).offset(10)
+            make.left.right.equalTo(view).inset(20)
+            make.height.equalTo(50)
+        }
+        
+        chefRecommendationTableView.snp.makeConstraints { make in
+            make.top.equalTo(bookingButton.snp.bottom).offset(10)
             make.left.right.equalTo(view)
             make.height.equalTo(150)
         }
         
         // Убедитесь, что scrollView может прокручиваться, если содержимое больше его высоты
-//        scrollView.contentSize = CGSize(width: view.frame.width, height: 200 + 50 + CGFloat(chefRecommendations.count * 150) + 20)
     }
     
     // MARK: - Data Fetching
@@ -155,8 +178,14 @@ class MainVC: UIViewController {
             make.height.equalTo(height)
         }
         // Обновите contentSize scrollView, если он зависит от высоты tableView
-        scrollView.contentSize = CGSize(width: view.frame.width, height: bannerCollectionView.frame.height + loyaltyPointsLabel.frame.height + CGFloat(height) + 20)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: bannerCollectionView.frame.height + loyaltyPointsLabel.frame.height + bookingButton.frame.height + CGFloat(height) + 20)
         view.layoutIfNeeded()
+    }
+    
+    @objc private func bookingButtonTapped() {
+        // Открыть экран бронирования
+        let bookingVC = BookingVC()
+        navigationController?.pushViewController(bookingVC, animated: true)
     }
 }
 
@@ -195,5 +224,13 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         150
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        let recommendation = chefRecommendations[indexPath.row]
+        guard let url = URL(string: recommendation.recipeUrl ?? "") else { return }
+        let webVC = WebViewController(url: url)
+        navigationController?.pushViewController(webVC, animated: true)
     }
 }
