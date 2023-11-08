@@ -19,8 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppCheck.setAppCheckProviderFactory(providerFactory)
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
-        let tabBarController = CustomTabBarController()
-        window?.rootViewController = tabBarController
+        window?.rootViewController = AuthVC()
         window?.makeKeyAndVisible()
         return true
     }

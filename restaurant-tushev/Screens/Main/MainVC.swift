@@ -57,14 +57,6 @@ class MainVC: UIViewController {
         return tableView
     }()
     
-    private lazy var loyaltyPointsLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Бонусные баллы: \(loyaltyPoints)"
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-        label.textAlignment = .center
-        return label
-    }()
-    
     private lazy var bookingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Бронировать столик", for: .normal)
@@ -81,13 +73,6 @@ class MainVC: UIViewController {
         setupUI()
         fetchBanners()
         fetchChefRecommendations()
-        fetchLoyaltyPoints()
-
-        if Auth.auth().currentUser == nil {
-            let authVC = AuthenticationVC()
-            authVC.modalPresentationStyle = .overFullScreen
-            self.present(authVC, animated: false)
-        }
     }
     
     // MARK: - Setup
@@ -96,7 +81,7 @@ class MainVC: UIViewController {
         navigationItem.title = "Главная"
         
         view.addSubview(scrollView)
-        scrollView.addSubviews(bannerCollectionView, pageControl, loyaltyPointsLabel, bookingButton, chefRecommendationTableView)
+        scrollView.addSubviews(bannerCollectionView, pageControl, bookingButton, chefRecommendationTableView)
         
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
@@ -115,15 +100,8 @@ class MainVC: UIViewController {
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
-        
-        loyaltyPointsLabel.snp.makeConstraints { make in
-            make.top.equalTo(bannerCollectionView.snp.bottom)
-            make.left.right.equalTo(view)
-            make.height.equalTo(50)
-        }
-        
         bookingButton.snp.makeConstraints { make in
-            make.top.equalTo(loyaltyPointsLabel.snp.bottom).offset(10)
+            make.top.equalTo(bannerCollectionView.snp.bottom).offset(10)
             make.left.right.equalTo(view).inset(20)
             make.height.equalTo(50)
         }
@@ -133,8 +111,6 @@ class MainVC: UIViewController {
             make.left.right.equalTo(view)
             make.height.equalTo(150)
         }
-        
-        // Убедитесь, что scrollView может прокручиваться, если содержимое больше его высоты
     }
     
     // MARK: - Data Fetching
@@ -168,17 +144,13 @@ class MainVC: UIViewController {
         }
     }
     
-    private func fetchLoyaltyPoints() {
-        // Здесь будет код для получения бонусных баллов пользователя
-    }
-    
     private func updateTableViewHeight() {
         let height = chefRecommendations.count * 150 // Высота всех ячеек
         chefRecommendationTableView.snp.updateConstraints { make in
             make.height.equalTo(height)
         }
         // Обновите contentSize scrollView, если он зависит от высоты tableView
-        scrollView.contentSize = CGSize(width: view.frame.width, height: bannerCollectionView.frame.height + loyaltyPointsLabel.frame.height + bookingButton.frame.height + CGFloat(height) + 20)
+        scrollView.contentSize = CGSize(width: view.frame.width, height: bannerCollectionView.frame.height + bookingButton.frame.height + CGFloat(height) + 20)
         view.layoutIfNeeded()
     }
     
@@ -222,6 +194,7 @@ extension MainVC: UITableViewDelegate, UITableViewDataSource {
         cell.configure(with: recommendation)
         return cell
     }
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         150
     }

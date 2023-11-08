@@ -1,98 +1,137 @@
-//
-//  ProfileVC.swift
-//  restaurant-tushev
-//
-//  Created by Egor Tushev on 26.10.2023.
-//
-
 import UIKit
 import SnapKit
 
 class ProfileVC: UIViewController {
     
     // MARK: - UI Components
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 50 // Радиус для круглой картинки
-        imageView.clipsToBounds = true
-        imageView.backgroundColor = .lightGray // Заглушка для изображения
-        return imageView
-    }()
-    
-    private let nameLabel: UILabel = {
+    private let phoneNumberLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.textColor = .black
+        // Здесь должен быть номер телефона пользователя, полученный из модели данных
+        label.text = "Номер телефона: +1234567890"
         return label
     }()
     
-    private let emailLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textAlignment = .center
-        label.textColor = .darkGray
-        return label
+    private let tableView: UITableView = {
+        let table = UITableView()
+        table.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        table.isScrollEnabled = false
+        return table
     }()
     
-    private let logoutButton: UIButton = {
+    private let signOutButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Выйти", for: .normal)
-        button.backgroundColor = .red
+        button.backgroundColor = .systemRed
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 20
-        button.addTarget(nil, action: #selector(logoutAction), for: .touchUpInside)
         return button
     }()
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        UserService.shared.fetchUser { [weak self] user, error in
+            DispatchQueue.main.async {
+                self?.phoneNumberLabel.text =  "Номер телефона: " + (user?.phoneNumber ?? "")
+            }
+        }
         setupLayout()
-        loadUserProfile()
+        setupTableView()
+        signOutButton.addTarget(self, action: #selector(signOutTapped), for: .touchUpInside)
     }
     
     // MARK: - Setup
     private func setupLayout() {
         view.backgroundColor = .white
-        navigationItem.title = "Профиль"
         
-        view.addSubviews(profileImageView, nameLabel, emailLabel, logoutButton)
-        
-        profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(40)
+        view.addSubviews(phoneNumberLabel, tableView, signOutButton)
+        phoneNumberLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.centerX.equalToSuperview()
-            make.size.equalTo(CGSize(width: 100, height: 100))
         }
         
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(20)
-            make.left.right.equalTo(view).inset(20)
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(phoneNumberLabel.snp.bottom).offset(20)
+            make.left.right.equalTo(view)
+            make.bottom.equalTo(signOutButton.snp.top).offset(-20)
         }
-        
-        emailLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(10)
-            make.left.right.equalTo(view).inset(20)
+
+        signOutButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(50)
+            make.width.equalTo(200)
         }
-        
-        logoutButton.snp.makeConstraints { make in
-            make.top.equalTo(emailLabel.snp.bottom).offset(30)
-            make.left.right.equalTo(view).inset(50)
-            make.height.equalTo(40)
-        }
+    }
+    
+    private func setupTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     // MARK: - Actions
-    @objc private func logoutAction() {
-        // Здесь будет логика для выхода из учетной записи
-        print("Пользователь вышел из учетной записи")
+    @objc private func signOutTapped() {
+        UserService.shared.signOut { [weak self] success, error in
+            if success {
+                DispatchQueue.main.async {
+                    self?.showLoginScreen()
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    self?.presentErrorAlert(withMessage: error.localizedDescription)
+                }
+            }
+        }
     }
     
-    // MARK: - Data Loading
-    private func loadUserProfile() {
-        // Здесь будет код для загрузки данных профиля пользователя
-        // Для примера установим заглушки
-        nameLabel.text = "Иван Иванов"
-        emailLabel.text = "ivan@example.com"
+    private func showLoginScreen() {
+        let authVC = AuthVC()
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        appDelegate.window?.rootViewController = authVC
+        appDelegate.window?.makeKeyAndVisible()
+    }
+}
+
+// MARK: - TableView DataSource & Delegate
+extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 3
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.accessoryType = .disclosureIndicator
+        cell.selectionStyle = .none
+        
+        switch indexPath.row {
+        case 0:
+            cell.textLabel?.text = "История заказов"
+            cell.imageView?.image = UIImage(systemName: "bag")
+        case 1:
+            cell.textLabel?.text = "История бронирования"
+            cell.imageView?.image = UIImage(systemName: "calendar")
+        case 2:
+            cell.textLabel?.text = "Мои адреса"
+            cell.imageView?.image = UIImage(systemName: "map")
+        default:
+            break
+        }
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60 // Высота ячейки
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }

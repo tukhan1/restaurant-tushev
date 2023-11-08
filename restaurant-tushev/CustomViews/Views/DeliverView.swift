@@ -25,9 +25,8 @@ class DeliverView: UIView {
     private func configureUI() {
         backgroundColor = .white
         layer.cornerRadius = 10
-        layer.maskedCorners = [.layerMaxXMinYCorner, .layerMinXMinYCorner]
-        layer.shadowOffset = CGSize(width: 0, height: -2)
-        layer.shadowOpacity = 0.05
+        layer.shadowOffset = CGSize(width: 0, height: -1)
+        layer.shadowOpacity = 0.15
         addSubviews(titleLabel, totalPriceLabel)
         titleLabel.numberOfLines = 0
         titleLabel.snp.makeConstraints { make in

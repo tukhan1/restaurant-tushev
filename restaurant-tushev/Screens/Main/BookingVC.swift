@@ -73,9 +73,11 @@ class BookingVC: UIViewController {
     
     // MARK: - Actions
     @objc private func reserveButtonTapped() {
-        // Здесь будет логика бронирования столика
-        // Например, отправка данных на сервер или сохранение в базу данных
-        print("Столик забронирован на \(datePicker.date) для \(numberOfGuestsOptions[numberOfGuestsPicker.selectedRow(inComponent: 0)]) гостей.")
+        let alert = UIAlertController(title: "Замечательно", message: "Столик забронирован на \(datePicker.date) для \(numberOfGuestsOptions[numberOfGuestsPicker.selectedRow(inComponent: 0)]) гостей. В ближайшее время с вами свяжется наш менеджер, для подтверждения бронирования", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Хорошо", style: .cancel, handler: { alert in
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        self.present(alert, animated: true)
     }
 }
 

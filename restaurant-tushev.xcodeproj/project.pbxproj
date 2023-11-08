@@ -52,7 +52,7 @@
 		779F7C1B2AE911C000B89127 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 779F7C1A2AE911C000B89127 /* SnapKit */; };
 		779F7C1D2AE911C000B89127 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 779F7C1C2AE911C000B89127 /* SnapKit-Dynamic */; };
 		779F7C2A2AE9124600B89127 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 779F7C292AE9124600B89127 /* GoogleService-Info.plist */; };
-		779F7C2C2AE9128700B89127 /* AuthenticationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779F7C2B2AE9128700B89127 /* AuthenticationVC.swift */; };
+		779F7C2C2AE9128700B89127 /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779F7C2B2AE9128700B89127 /* AuthVC.swift */; };
 		77C59F0B2AF3F70F00A31B32 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F0A2AF3F70F00A31B32 /* SectionHeader.swift */; };
 		77C59F152AF5122800A31B32 /* MiniCartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F142AF5122800A31B32 /* MiniCartView.swift */; };
 		77C59F172AF5168600A31B32 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F162AF5168600A31B32 /* CustomTabBarController.swift */; };
@@ -62,8 +62,11 @@
 		77C59F242AF5668400A31B32 /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77C59F232AF5668400A31B32 /* MainVC.swift */; };
 		77DB47B32AF7F88900A080C7 /* BookingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47B22AF7F88900A080C7 /* BookingVC.swift */; };
 		77DB47B52AF806B800A080C7 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47B42AF806B800A080C7 /* WebViewController.swift */; };
-		77DB47BA2AF8396200A080C7 /* CheckoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47B92AF8396200A080C7 /* CheckoutVC.swift */; };
 		77DB47BC2AF848E700A080C7 /* InputSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47BB2AF848E700A080C7 /* InputSectionView.swift */; };
+		77DB47BE2AFA6E6600A080C7 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47BD2AFA6E6600A080C7 /* UserService.swift */; };
+		77DB47C02AFA7A4B00A080C7 /* UIViewController+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47BF2AFA7A4B00A080C7 /* UIViewController+Ext.swift */; };
+		77DB47C22AFAB0F100A080C7 /* AddressVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47C12AFAB0F000A080C7 /* AddressVC.swift */; };
+		77DB47C42AFAC18B00A080C7 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77DB47C32AFAC18B00A080C7 /* AddressView.swift */; };
 		77E9EBB22AF574C7003CB05D /* Money+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB12AF574C7003CB05D /* Money+Ext.swift */; };
 		77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB52AF690BF003CB05D /* DeliverView.swift */; };
 		77E9EBB82AF6AA73003CB05D /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB72AF6AA73003CB05D /* BannerCell.swift */; };
@@ -89,7 +92,7 @@
 		779F7BD12AE82BBF00B89127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		779F7BD32AE82BBF00B89127 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		779F7C292AE9124600B89127 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		779F7C2B2AE9128700B89127 /* AuthenticationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationVC.swift; sourceTree = "<group>"; };
+		779F7C2B2AE9128700B89127 /* AuthVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
 		77C59F0A2AF3F70F00A31B32 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		77C59F142AF5122800A31B32 /* MiniCartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniCartView.swift; sourceTree = "<group>"; };
 		77C59F162AF5168600A31B32 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
@@ -99,8 +102,11 @@
 		77C59F232AF5668400A31B32 /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
 		77DB47B22AF7F88900A080C7 /* BookingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingVC.swift; sourceTree = "<group>"; };
 		77DB47B42AF806B800A080C7 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
-		77DB47B92AF8396200A080C7 /* CheckoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckoutVC.swift; sourceTree = "<group>"; };
 		77DB47BB2AF848E700A080C7 /* InputSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputSectionView.swift; sourceTree = "<group>"; };
+		77DB47BD2AFA6E6600A080C7 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		77DB47BF2AFA7A4B00A080C7 /* UIViewController+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Ext.swift"; sourceTree = "<group>"; };
+		77DB47C12AFAB0F000A080C7 /* AddressVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressVC.swift; sourceTree = "<group>"; };
+		77DB47C32AFAC18B00A080C7 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		77E9EBB12AF574C7003CB05D /* Money+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Money+Ext.swift"; sourceTree = "<group>"; };
 		77E9EBB52AF690BF003CB05D /* DeliverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverView.swift; sourceTree = "<group>"; };
 		77E9EBB72AF6AA73003CB05D /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
@@ -153,7 +159,7 @@
 				77DB47B82AF806D500A080C7 /* Main */,
 				77C59F272AF56D5B00A31B32 /* Delivery */,
 				7777B0412AEAA375005F8573 /* ProfileVC.swift */,
-				779F7C2B2AE9128700B89127 /* AuthenticationVC.swift */,
+				779F7C2B2AE9128700B89127 /* AuthVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -175,7 +181,6 @@
 				77C59F202AF5334B00A31B32 /* Cells */,
 				7777AFF72AE920A6005F8573 /* CustomLabel.swift */,
 				7777B0042AE9269B005F8573 /* CustomButton.swift */,
-				77E9EBB52AF690BF003CB05D /* DeliverView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -186,6 +191,7 @@
 				7777AFFD2AE92523005F8573 /* UIView+Ext.swift */,
 				7777B0472AEBA3A3005F8573 /* UIColletionView+Ext.swift */,
 				77E9EBB12AF574C7003CB05D /* Money+Ext.swift */,
+				77DB47BF2AFA7A4B00A080C7 /* UIViewController+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -206,6 +212,7 @@
 				7777B04B2AEEDAA0005F8573 /* ImageStorageManager.swift */,
 				7777B0492AEED9AB005F8573 /* DTO.swift */,
 				77C59F182AF517FA00A31B32 /* CartManager.swift */,
+				77DB47BD2AFA6E6600A080C7 /* UserService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,6 +266,8 @@
 			children = (
 				77C59F142AF5122800A31B32 /* MiniCartView.swift */,
 				77DB47BB2AF848E700A080C7 /* InputSectionView.swift */,
+				77DB47C32AFAC18B00A080C7 /* AddressView.swift */,
+				77E9EBB52AF690BF003CB05D /* DeliverView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -276,7 +285,7 @@
 			children = (
 				7777B03D2AEAA0FC005F8573 /* OrderVC.swift */,
 				77C59F1C2AF52DD700A31B32 /* CartVC.swift */,
-				77DB47B92AF8396200A080C7 /* CheckoutVC.swift */,
+				77DB47C12AFAB0F000A080C7 /* AddressVC.swift */,
 			);
 			path = Delivery;
 			sourceTree = "<group>";
@@ -400,19 +409,22 @@
 				7777AFFA2AE9221C005F8573 /* Constants.swift in Sources */,
 				77DB47B52AF806B800A080C7 /* WebViewController.swift in Sources */,
 				7777AFFE2AE92523005F8573 /* UIView+Ext.swift in Sources */,
+				77DB47C02AFA7A4B00A080C7 /* UIViewController+Ext.swift in Sources */,
 				77C59F172AF5168600A31B32 /* CustomTabBarController.swift in Sources */,
 				77DB47BC2AF848E700A080C7 /* InputSectionView.swift in Sources */,
 				77C59F0B2AF3F70F00A31B32 /* SectionHeader.swift in Sources */,
 				77C59F1F2AF5329100A31B32 /* ProductInCartCell.swift in Sources */,
 				7777B0422AEAA375005F8573 /* ProfileVC.swift in Sources */,
+				77DB47C22AFAB0F100A080C7 /* AddressVC.swift in Sources */,
+				77DB47BE2AFA6E6600A080C7 /* UserService.swift in Sources */,
 				7777B04C2AEEDAA0005F8573 /* ImageStorageManager.swift in Sources */,
 				7777B04F2AEEDEC8005F8573 /* MenuService.swift in Sources */,
 				7777B04A2AEED9AB005F8573 /* DTO.swift in Sources */,
-				779F7C2C2AE9128700B89127 /* AuthenticationVC.swift in Sources */,
+				779F7C2C2AE9128700B89127 /* AuthVC.swift in Sources */,
 				7777B0482AEBA3A3005F8573 /* UIColletionView+Ext.swift in Sources */,
 				7777B0462AEAA714005F8573 /* ProductCell.swift in Sources */,
+				77DB47C42AFAC18B00A080C7 /* AddressView.swift in Sources */,
 				7777B0052AE9269B005F8573 /* CustomButton.swift in Sources */,
-				77DB47BA2AF8396200A080C7 /* CheckoutVC.swift in Sources */,
 				77E9EBB22AF574C7003CB05D /* Money+Ext.swift in Sources */,
 				77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */,
 				7777B0442AEAA508005F8573 /* UIHelper.swift in Sources */,

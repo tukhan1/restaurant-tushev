@@ -10,8 +10,6 @@ import SnapKit
 
 class CustomTabBarController: UITabBarController {
     
-    let miniCartView = MiniCartView()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewControllers()

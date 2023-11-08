@@ -41,3 +41,59 @@ struct MasterClass: Codable {
     let date: String
     let recipeUrl: String?
 }
+
+struct User {
+    let uid: String
+    let phoneNumber: String
+    
+    init(uid: String, dictionary: [String: Any]) {
+        self.uid = uid
+        self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
+    }
+}
+
+struct Order {
+    var id: String
+    var date: Date
+    var totalAmount: Double
+    
+    var dictionary: [String: Any] {
+        return [
+            "id": id,
+            "date": date,
+            "totalAmount": totalAmount
+        ]
+    }
+}
+
+struct Address {
+    let name: String
+    let street: String
+    let houseNumber: String
+    let apartment: String
+    let building: String?
+    let intercom: String?
+    
+    
+    var dictionary: [String: Any] {
+        var dict: [String: Any] = [
+            "name": name,
+            "street": street,
+            "houseNumber": houseNumber,
+            "apartment": apartment
+        ]
+
+        
+        if let building = building {
+            dict["building"] = building
+        }
+        
+        if let intercom = intercom {
+            dict["intercom"] = intercom
+        }
+        
+        
+        return dict
+    }
+}
+
