@@ -29,6 +29,14 @@ class AddressVC: UIViewController {
         setupAddButton()
     }
     
+    func prefill(with address: Address) {
+        nameTextField.text = address.name
+        streetTextField.text = address.street
+        houseNumberTextField.text = address.houseNumber
+        apartmentTextField.text = address.apartment
+        buildingTextField.text = address.building
+        intercomTextField.text = address.intercom
+    }
     // MARK: - Setup
     private func setupLayout() {
         view.backgroundColor = .white
@@ -93,7 +101,6 @@ class AddressVC: UIViewController {
     }
     
     private func setupAddButton() {
-        // Enable the button only if all required fields are filled
         [nameTextField, streetTextField, houseNumberTextField, apartmentTextField].forEach { textField in
             textField.addTarget(self, action: #selector(textFieldChanged), for: .editingChanged)
         }
@@ -101,7 +108,6 @@ class AddressVC: UIViewController {
     
     // MARK: - Actions
     @objc private func addAddressButtonTapped() {
-        // Проверяем, что все поля заполнены
         guard let name = nameTextField.text, !name.isEmpty,
               let street = streetTextField.text, !street.isEmpty,
               let houseNumber = houseNumberTextField.text, !houseNumber.isEmpty,
@@ -109,7 +115,6 @@ class AddressVC: UIViewController {
             return
         }
         
-        // Создаем экземпляр структуры Address
         let address = Address(
             name: name,
             street: street,
@@ -119,14 +124,7 @@ class AddressVC: UIViewController {
             intercom: intercomTextField.text
         )
         
-        // Получаем ID текущего пользователя
-        guard let userId = Auth.auth().currentUser?.uid else {
-            print("Пользователь не вошел в систему")
-            return
-        }
-        
-        // Добавляем адрес через UserService
-        UserService.shared.addAddress(address, for: userId) { [weak self] result in
+        UserService.shared.saveAddress(address) { [weak self] result in
             switch result {
             case .success():
                 print("Адрес успешно добавлен")
@@ -135,15 +133,15 @@ class AddressVC: UIViewController {
                     self?.dismiss(animated: true)
                 }
             case .failure(let error):
-                print("Ошибка добавления адреса: \(error.localizedDescription)")
-                // Показываем ошибку пользователю
+                DispatchQueue.main.async {
+                    self?.presentErrorAlert(withMessage: error.localizedDescription)
+                }
             }
         }
     }
 
     
     @objc private func textFieldChanged() {
-        // Check if all required text fields are filled
         addButton.isEnabled = !nameTextField.text!.isEmpty && !streetTextField.text!.isEmpty && !houseNumberTextField.text!.isEmpty && !apartmentTextField.text!.isEmpty
     }
 }

@@ -1,5 +1,5 @@
 //
-//  CustomTabBarController.swift
+//  CustomTabBar.swift
 //  restaurant-tushev
 //
 //  Created by Egor Tushev on 03.11.2023.
@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-class CustomTabBarController: UITabBarController {
+class CustomTabBar: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

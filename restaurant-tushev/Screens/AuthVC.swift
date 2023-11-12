@@ -74,7 +74,7 @@ class AuthVC: UIViewController {
     }
     
     private func navigateToMainInterface() {
-        let mainController = CustomTabBarController()
+        let mainController = CustomTabBar()
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -140,10 +140,23 @@ class AuthVC: UIViewController {
         UserService.shared.signInWithVerificationCode(code, verificationID: verificationID) { [weak self] result in
             switch result {
             case .success():
+                self?.createLoyaltyCard()
                 self?.navigateToMainInterface()
             case .failure(let error):
                 self?.presentErrorAlert(withMessage: "Код введен не верно. Пожалуйста, попробуйте еще раз.")
                 print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func createLoyaltyCard() {
+        let loyaltyCard = Loyalty(id: UUID().uuidString, amount: 0)
+        UserService.shared.createLoyaltyCard(loyaltyCard) { result in
+            switch result {
+            case .success():
+                print("Карта лояльности успешно создана")
+            case .failure(let error):
+                print("Ошибка при создании карты лояльности: \(error.localizedDescription)")
             }
         }
     }

@@ -60,12 +60,14 @@ class MainVC: UIViewController {
     private lazy var bookingButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Бронировать столик", for: .normal)
-        button.backgroundColor = .systemBlue
+        button.backgroundColor = .lightBrown
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
         button.addTarget(self, action: #selector(bookingButtonTapped), for: .touchUpInside)
         return button
     }()
+    
+    private let loyaltyView: LoyaltyView = LoyaltyView(frame: .zero)
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -73,6 +75,7 @@ class MainVC: UIViewController {
         setupUI()
         fetchBanners()
         fetchChefRecommendations()
+        fetchLoyalty()
     }
     
     // MARK: - Setup
@@ -81,27 +84,29 @@ class MainVC: UIViewController {
         navigationItem.title = "Главная"
         
         view.addSubview(scrollView)
-        scrollView.addSubviews(bannerCollectionView, pageControl, bookingButton, chefRecommendationTableView)
-        
+        scrollView.addSubviews(bannerCollectionView, pageControl, loyaltyView,bookingButton, chefRecommendationTableView)
         scrollView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        
         bannerCollectionView.snp.makeConstraints { make in
             make.top.equalTo(scrollView.snp.top).offset(10)
             make.left.right.equalTo(view)
             make.height.equalTo(200)
             make.width.equalTo(view)
         }
-        
         pageControl.snp.makeConstraints { make in
             make.bottom.equalTo(bannerCollectionView.snp.bottom).offset(-5)
             make.centerX.equalTo(view.snp.centerX)
             make.width.equalTo(200)
             make.height.equalTo(30)
         }
-        bookingButton.snp.makeConstraints { make in
+        loyaltyView.snp.makeConstraints { make in
             make.top.equalTo(bannerCollectionView.snp.bottom).offset(10)
+            make.left.right.equalTo(view).inset(20)
+            make.height.equalTo(100)
+        }
+        bookingButton.snp.makeConstraints { make in
+            make.top.equalTo(loyaltyView.snp.bottom).offset(10)
             make.left.right.equalTo(view).inset(20)
             make.height.equalTo(50)
         }
@@ -113,9 +118,25 @@ class MainVC: UIViewController {
         }
     }
     
+    private func updateTableViewHeight() {
+        let height = chefRecommendations.count * 150 // Высота всех ячеек
+        chefRecommendationTableView.snp.updateConstraints { make in
+            make.height.equalTo(height)
+        }
+        // Обновите contentSize scrollView, если он зависит от высоты tableView
+        scrollView.contentSize = CGSize(width: view.frame.width, height: bannerCollectionView.frame.height + loyaltyView.frame.height + bookingButton.frame.height + CGFloat(height) + 40)
+        view.layoutIfNeeded()
+    }
+    
+    @objc private func bookingButtonTapped() {
+        // Открыть экран бронирования
+        let bookingVC = BookingVC()
+        navigationController?.pushViewController(bookingVC, animated: true)
+    }
+    
     // MARK: - Data Fetching
     private func fetchBanners() {
-        MenuService.shared.fetchBanners { result in
+        RestaurantService.shared.fetchBanners { result in
             switch result {
             case .success(let banners):
                 DispatchQueue.main.async {
@@ -130,7 +151,7 @@ class MainVC: UIViewController {
     }
     
     private func fetchChefRecommendations() {
-        MenuService.shared.fetchChefRecommendations { result in
+        RestaurantService.shared.fetchChefRecommendations { result in
             switch result {
             case .success(let chefRecommendations):
                 DispatchQueue.main.async {
@@ -144,20 +165,17 @@ class MainVC: UIViewController {
         }
     }
     
-    private func updateTableViewHeight() {
-        let height = chefRecommendations.count * 150 // Высота всех ячеек
-        chefRecommendationTableView.snp.updateConstraints { make in
-            make.height.equalTo(height)
+    // Автоматическая Регистрация при Создании Аккаунта
+    private func fetchLoyalty() {
+        UserService.shared.fetchLoyaltyData { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let loyaltyCard):
+                DispatchQueue.main.async { self.loyaltyView.setAmount(loyaltyCard.amount) }
+            case .failure(let error):
+                print(error)
+            }
         }
-        // Обновите contentSize scrollView, если он зависит от высоты tableView
-        scrollView.contentSize = CGSize(width: view.frame.width, height: bannerCollectionView.frame.height + bookingButton.frame.height + CGFloat(height) + 20)
-        view.layoutIfNeeded()
-    }
-    
-    @objc private func bookingButtonTapped() {
-        // Открыть экран бронирования
-        let bookingVC = BookingVC()
-        navigationController?.pushViewController(bookingVC, animated: true)
     }
 }
 
@@ -179,6 +197,11 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
             let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
             pageControl.currentPage = Int(pageIndex)
         }
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let banner = banners[indexPath.item]
+        self.present(PromoDitailsVC(banner: banner), animated: true)
     }
 }
 

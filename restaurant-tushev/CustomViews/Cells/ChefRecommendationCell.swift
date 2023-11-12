@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ChefRecommendationCell: UITableViewCell {
     
@@ -89,9 +90,8 @@ class ChefRecommendationCell: UITableViewCell {
        }
        
        func configure(with masterClass: MasterClass) {
-           ImageStorageManager.shared.downloadImage(from: masterClass.imageUrl) {[weak self] image in
-               guard let self = self else { return }
-               DispatchQueue.main.async { self.masterClassImageView.image = image }
+           if let url = URL(string: masterClass.imageUrl) {
+               masterClassImageView.kf.setImage(with: url)
            }
            titleLabel.text = masterClass.title
            descriptionLabel.text = masterClass.description

@@ -43,7 +43,7 @@ class DeliverView: UIView {
         }
     }
     
-    func setTotalPrice(_ total: String) {
-        totalPriceLabel.text = total + " Р"
+    func setTotalPrice(_ total: Double) {
+        totalPriceLabel.text = "\(total) Р"
     }
 }

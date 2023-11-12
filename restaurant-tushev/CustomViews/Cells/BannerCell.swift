@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class BannerCell: UICollectionViewCell {
     
@@ -15,7 +16,6 @@ class BannerCell: UICollectionViewCell {
         iv.clipsToBounds = true
         return iv
     }()
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
@@ -23,7 +23,6 @@ class BannerCell: UICollectionViewCell {
         label.numberOfLines = 0
         return label
     }()
-    
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
@@ -64,9 +63,10 @@ class BannerCell: UICollectionViewCell {
     }
     
     func configure(with banner: Banner) {
-        ImageStorageManager.shared.downloadImage(from: banner.imageUrl) {[weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async { self.imageView.image = image }
+        if let url = URL(string: banner.imageUrl) {
+            imageView.kf.setImage(with: url)
+        } else {
+            print("Неверный формат URL")
         }
         titleLabel.text = banner.title
         descriptionLabel.text = banner.description

@@ -33,11 +33,7 @@ class ProfileVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        UserService.shared.fetchUser { [weak self] user, error in
-            DispatchQueue.main.async {
-                self?.phoneNumberLabel.text =  "Номер телефона: " + (user?.phoneNumber ?? "")
-            }
-        }
+        fetchUser()
         setupLayout()
         setupTableView()
         signOutButton.addTarget(self, action: #selector(signOutTapped), for: .touchUpInside)
@@ -96,6 +92,19 @@ class ProfileVC: UIViewController {
         
         appDelegate.window?.rootViewController = authVC
         appDelegate.window?.makeKeyAndVisible()
+    }
+    
+    private func fetchUser() {
+        UserService.shared.fetchUser { [weak self] result in
+            switch result {
+            case .success(let user):
+                DispatchQueue.main.async {
+                    self?.phoneNumberLabel.text =  "Номер телефона: " + (user.phoneNumber)
+                }
+            case .failure(let error):
+                self?.presentErrorAlert(withMessage: error.localizedDescription)
+            }
+        }
     }
 }
 

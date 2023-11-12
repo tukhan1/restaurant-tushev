@@ -7,15 +7,16 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
 final class ProductInCartCell: UITableViewCell, ReusableView {
-    let productImageView = UIImageView()
-    let productNameLabel = UILabel()
-    let priceLabel = UILabel()
+    private let productImageView = UIImageView(frame: .zero)
+    private let productNameLabel = UILabel(frame: .zero)
+    private let priceLabel = UILabel(frame: .zero)
+    private let quantityLabel = UILabel(frame: .zero)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         // Настройка элементов UI
         setupViews()
         setupConstraints()
@@ -38,6 +39,7 @@ final class ProductInCartCell: UITableViewCell, ReusableView {
         contentView.addSubview(productImageView)
         contentView.addSubview(productNameLabel)
         contentView.addSubview(priceLabel)
+        contentView.addSubview(quantityLabel)
     }
     
     private func setupConstraints() {
@@ -53,23 +55,28 @@ final class ProductInCartCell: UITableViewCell, ReusableView {
         }
         priceLabel.snp.makeConstraints { make in
             make.left.equalTo(productImageView.snp.right).offset(10)
-            make.right.equalToSuperview().inset(10)
+            make.right.equalTo(quantityLabel.snp.left)
             make.top.equalTo(productNameLabel.snp.bottom).offset(5)
+        }
+        quantityLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview().inset(10)
+            make.width.equalTo(30)
         }
     }
     
     // Функция для конфигурации ячейки с данными
-    func configure(with product: Product) {
-        // Здесь должна быть логика загрузки изображения для productImageView
-        productNameLabel.text = product.title
-        priceLabel.text = "\(product.cost) Р"
-        downloadImage(fromUrl: product.imageUrl)
+    func configure(with cartItem: CartItem) {
+        downloadImage(fromUrl: cartItem.product.imageUrl)
+        productNameLabel.text = cartItem.product.title
+        priceLabel.text = "\(cartItem.product.cost) Р"
+        quantityLabel.text = "\(cartItem.quantity)"
     }
     
     private func downloadImage(fromUrl url: String) {
-        ImageStorageManager.shared.downloadImage(from: url) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async { self.productImageView.image = image }
+        if let url = URL(string: url) {
+            productImageView.kf.setImage(with: url)
         }
     }
 }

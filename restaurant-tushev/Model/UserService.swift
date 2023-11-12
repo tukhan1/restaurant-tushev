@@ -7,38 +7,29 @@
 
 import Firebase
 
-class UserService {
+final class UserService: FirestoreOperable {
+    
+    private let auth: Auth
+    private let db: Firestore
     
     var userId: String? {
-        return Auth.auth().currentUser?.uid
+        return auth.currentUser?.uid
     }
     
-    static let shared = UserService()
+    static let shared = UserService(auth: Auth.auth(), db: Firestore.firestore())
     
-    private init() {}
+    private init(auth: Auth, db: Firestore) {
+        self.auth = auth
+        self.db = db
+    }
     
-    func fetchUser(completion: @escaping (User?, Error?) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            completion(nil, NSError(domain: "app", code: 404, userInfo: [NSLocalizedDescriptionKey: "Пользователь не найден."]))
+    func fetchUser(completion: @escaping (Result<User, Error>) -> Void) {
+        guard let uid = userId else {
+            completion(.failure(NSError(domain: "app", code: 404, userInfo: [NSLocalizedDescriptionKey: "Пользователь не найден."])))
             return
         }
         
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(uid)
-        
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let userData = document.data()
-                if let safeData = userData {
-                    let user = User(uid: uid, dictionary: safeData)
-                    completion(user, nil)
-                } else {
-                    completion(nil, error)
-                }
-            } else {
-                completion(nil, error)
-            }
-        }
+        fetchData(collectionPath: K.users, documentId: uid, resultType: User.self, completion: completion)
     }
     
     func verifyPhoneNumber(_ phoneNumber: String, completion: @escaping (Result<String, Error>) -> Void) {
@@ -54,7 +45,7 @@ class UserService {
     func signInWithVerificationCode(_ verificationCode: String, verificationID: String, completion: @escaping (Result<Void, Error>) -> Void) {
         let credential = PhoneAuthProvider.provider().credential(withVerificationID: verificationID, verificationCode: verificationCode)
         
-        Auth.auth().signIn(with: credential) { [weak self] (authResult, error) in
+        auth.signIn(with: credential) { [weak self] (authResult, error) in
             if let error = error {
                 completion(.failure(error))
             } else if let authResult = authResult {
@@ -66,7 +57,7 @@ class UserService {
     
     func signOut(completion: @escaping (Bool, Error?) -> Void) {
         do {
-            try Auth.auth().signOut()
+            try auth.signOut()
             completion(true, nil)
         } catch let signOutError as NSError {
             print("Error signing out: %@", signOutError)
@@ -80,55 +71,43 @@ class UserService {
             return
         }
         
-        let userRef = Firestore.firestore().collection("users").document(userId)
-        userRef.setData(["phoneNumber": phoneNumber], merge: true) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
-            }
-        }
+        let data = ["phoneNumber": phoneNumber]
+        saveData(collectionPath: K.users, documentId: userId, data: data, merge: true, completion: completion)
     }
     
-    func saveOrder(_ order: Order, for userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let db = Firestore.firestore()
-        
-        db.collection("users").document(userId).collection("orders").document(order.id).setData(order.dictionary) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
-            }
-        }
+    func saveOrder(_ order: Order, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.orders)"
+        saveData(collectionPath: path, documentId: order.id, data: order, merge: false, completion: completion)
     }
     
-    func addAddress(_ address: Address, for userId: String, completion: @escaping (Result<Void, Error>) -> Void) {
-        let userAddressesCollection = Firestore.firestore().collection("users").document(userId).collection("addresses")
-        userAddressesCollection.addDocument(data: address.dictionary) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(()))
-            }
-        }
+    func saveAddress(_ address: Address, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.addresses)"
+        saveData(collectionPath: path, documentId: K.currentAddress, data: address, merge: true, completion: completion)
     }
     
-    func fetchUserAddress(userId: String, completion: @escaping (Result<String, Error>) -> Void) {
-            let userDocRef = Firestore.firestore().collection("users").document(userId)
-            
-            userDocRef.getDocument { (document, error) in
-                if let error = error {
-                    completion(.failure(error))
-                    return
-                }
-                
-                if let document = document, document.exists {
-                    let address = document.data()?["fullAddress"] as? String
-                    completion(.success(address ?? "Адрес не указан"))
-                } else {
-                    completion(.failure(NSError(domain: "UserService", code: -1, userInfo: [NSLocalizedDescriptionKey: "Документ пользователя не найден"])))
-                }
-            }
-        }
-}
+    func fetchAddress(completion: @escaping (Result<Address, Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.addresses)"
+        fetchData(collectionPath: path, documentId: K.currentAddress, resultType: Address.self, completion: completion)
+    }
 
+    func fetchLoyaltyData(completion: @escaping (Result<Loyalty, Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.loyalty)"
+        fetchData(collectionPath: path, documentId: K.loyaltyCard, resultType: Loyalty.self, completion: completion)
+    }
+    
+    func createLoyaltyCard(_ loyaltyCard: Loyalty, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.loyalty)"
+        saveData(collectionPath: path, documentId: K.loyaltyCard, data: loyaltyCard, merge: true, completion: completion)
+    }
+    
+    func saveReservation(_ reservation: Reservation, completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.reservations)"
+        saveData(collectionPath: path, documentId: reservation.id, data: reservation, merge: false, completion: completion)
+    }
+}

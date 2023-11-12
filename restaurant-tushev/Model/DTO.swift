@@ -6,7 +6,35 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
+// MARK: - User Profile
+struct User: Codable {
+    let phoneNumber: String
+}
+
+struct Address: Codable {
+    let name: String
+    let street: String
+    let houseNumber: String
+    let apartment: String
+    let building: String?
+    let intercom: String?
+}
+
+struct Loyalty: Codable {
+    let id: String
+    let amount: Double
+}
+
+// MARK: - Orders
+struct Order: Codable {
+    var id: String
+    var date: Date
+    var totalAmount: Double
+}
+
+// MARK: - Menu
 struct Product: Codable, Equatable {
     let title: String
     let cost: String
@@ -28,10 +56,12 @@ struct MenuSection {
     let products: [Product]
 }
 
+// MARK: - Promotions
 struct Banner: Codable {
     let imageUrl: String
     let title: String
     let description: String
+    let activeUrl: String?
 }
 
 struct MasterClass: Codable {
@@ -42,58 +72,15 @@ struct MasterClass: Codable {
     let recipeUrl: String?
 }
 
-struct User {
-    let uid: String
-    let phoneNumber: String
-    
-    init(uid: String, dictionary: [String: Any]) {
-        self.uid = uid
-        self.phoneNumber = dictionary["phoneNumber"] as? String ?? ""
-    }
-}
-
-struct Order {
+// MARK: - Reservations
+struct Reservation: Codable {
     var id: String
     var date: Date
-    var totalAmount: Double
-    
-    var dictionary: [String: Any] {
-        return [
-            "id": id,
-            "date": date,
-            "totalAmount": totalAmount
-        ]
-    }
+    var numberOfGuests: Int
 }
 
-struct Address {
-    let name: String
-    let street: String
-    let houseNumber: String
-    let apartment: String
-    let building: String?
-    let intercom: String?
-    
-    
-    var dictionary: [String: Any] {
-        var dict: [String: Any] = [
-            "name": name,
-            "street": street,
-            "houseNumber": houseNumber,
-            "apartment": apartment
-        ]
-
-        
-        if let building = building {
-            dict["building"] = building
-        }
-        
-        if let intercom = intercom {
-            dict["intercom"] = intercom
-        }
-        
-        
-        return dict
-    }
+// MARK: - Cart
+struct CartItem {
+    let product: Product
+    var quantity: Int
 }
-

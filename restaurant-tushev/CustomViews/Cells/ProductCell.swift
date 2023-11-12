@@ -1,5 +1,5 @@
 //
-//  CustomCollectionVIewCellCollectionViewCell.swift
+//  ProductCell.swift
 //  restaurant-tushev
 //
 //  Created by Egor Tushev on 26.10.2023.
@@ -7,15 +7,17 @@
 
 import UIKit
 import SnapKit
+import Kingfisher
 
-class ProductCell: UICollectionViewCell, ReusableView {
+final class ProductCell: UICollectionViewCell, ReusableView {
     
     var addToCartAction: (() -> Void)?
     var removeFromCartAction: (() -> Void)?
-    var isInCart: Bool = false
     
-    private var product: Product?
+    var tapCounter: Int = 0
 
+    private var product: Product?
+    
     private let productImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.contentMode = .scaleAspectFill
@@ -26,8 +28,32 @@ class ProductCell: UICollectionViewCell, ReusableView {
     private let productCostLabel = CustomLabel(font: .body, textAligment: .left)
     private let productTitleLabel = CustomLabel(font: .body, textAligment: .left)
     private let productWeightLabel = CustomLabel(font: .promt, textAligment: .left)
-    private let buyButton: CustomButton = CustomButton(title: "В корзину",
-                                                       background: UIColor(named: "clouds"))
+    private let buyButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.backgroundColor = .lightBrown
+        button.layer.cornerRadius = 17
+        button.layer.shadowOpacity = 0.05
+        return button
+    }()
+    private let counterLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.textAlignment = .center
+        label.lineBreakMode = .byTruncatingTail
+        label.textColor = .white
+        return label
+    }()
+    private let plusButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = .white
+        return button
+    }()
+    private let minusButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setImage(UIImage(systemName: "minus"), for: .normal)
+        button.tintColor = .white
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -44,46 +70,25 @@ class ProductCell: UICollectionViewCell, ReusableView {
         productCostLabel.text = product.cost + " Р"
         productTitleLabel.text = product.title
         productWeightLabel.text = product.weight + " g"
-        updateCartButton(isInCart: isInCart)
+        updateButtonUI()
         downloadImage(fromUrl: product.imageUrl)
     }
 
     private func downloadImage(fromUrl url: String) {
-        ImageStorageManager.shared.downloadImage(from: url) { [weak self] image in
-            guard let self = self else { return }
-            DispatchQueue.main.async { self.productImageView.image = image }
-        }
+        if let url = URL(string: url) { productImageView.kf.setImage(with: url) }
     }
 
     private func configure() {
         contentView.addSubviews(productImageView, productCostLabel, productTitleLabel, productWeightLabel, buyButton)
-        backgroundColor = UIColor(named: "silver")
+        buyButton.addSubviews(counterLabel, plusButton, minusButton)
+        backgroundColor = .mediumBrown
         layer.cornerRadius = 15
         productTitleLabel.numberOfLines = 0
-        buyButton.addTarget(self, action: #selector(buyButtonTapped), for: .touchUpInside)
-    }
-
-    @objc private func buyButtonTapped() {
-        if buyButton.currentTitle == "В корзину" {
-                    addToCartAction?()
-                } else {
-                    removeFromCartAction?()
-                }
+        buyButton.addTarget(nil, action: #selector(buyButtonTapped), for: .touchUpInside)
+        plusButton.addTarget(nil, action: #selector(increaseQuantity), for: .touchUpInside)
+        minusButton.addTarget(nil, action: #selector(decreaseQuantity), for: .touchUpInside)
     }
     
-    func updateCartButton(isInCart: Bool) {
-            if isInCart {
-                buyButton.setTitle("Убрать", for: .normal)
-            } else {
-                buyButton.setTitle("В корзину", for: .normal)
-            }
-        }
-
-    private func updateButtonUI(_ inCart: Bool) {
-        inCart ? buyButton.setTitle("Убрать", for: .normal): buyButton.setTitle("Добавить", for: .normal)
-        buyButton.backgroundColor = inCart ? .lightGray: UIColor(named: "clouds")
-    }
-
     private func makeConstraints() {
         productImageView.snp.makeConstraints { make in
             make.top.equalTo(contentView.snp.top).offset(6)
@@ -114,6 +119,64 @@ class ProductCell: UICollectionViewCell, ReusableView {
             make.left.equalTo(contentView.snp.left).offset(6)
             make.right.equalTo(contentView.snp.right).inset(6)
             make.height.equalTo(contentView.snp.height).multipliedBy(0.12)
+        }
+        counterLabel.snp.makeConstraints { make in
+            make.top.equalTo(buyButton.snp.top)
+            make.height.equalTo(buyButton.snp.height)
+            make.left.equalTo(minusButton.snp.right)
+            make.right.equalTo(plusButton.snp.left)
+        }
+        plusButton.snp.makeConstraints { make in
+            make.right.equalTo(buyButton.snp.right)
+            make.top.equalTo(buyButton.snp.top)
+            make.width.equalTo(buyButton.snp.width).multipliedBy(0.2)
+            make.height.equalTo(buyButton.snp.height)
+        }
+        minusButton.snp.makeConstraints { make in
+            make.left.equalTo(buyButton.snp.left)
+            make.top.equalTo(buyButton.snp.top)
+            make.width.equalTo(buyButton.snp.width).multipliedBy(0.2)
+            make.height.equalTo(buyButton.snp.height)
+        }
+    }
+
+    @objc private func buyButtonTapped() {
+        if tapCounter == 0 {
+            increaseQuantity()
+        }
+    }
+    
+    private func updateButtonUI() {
+        if tapCounter == 0 {
+            buyButton.setTitle("В корзину", for: .normal)
+            counterLabel.text = ""
+            counterLabel.isHidden = true
+            plusButton.isHidden =   true
+            minusButton.isHidden =  true
+            return
+        }
+        buyButton.setTitle("", for: .normal)
+        counterLabel.text = "\(tapCounter)"
+        counterLabel.isHidden = false
+        plusButton.isHidden = false
+        minusButton.isHidden = false
+    }
+
+    @objc func increaseQuantity() {
+        tapCounter += 1
+        updateButtonUI()
+        addToCartAction?()
+    }
+
+    @objc func decreaseQuantity() {
+        if tapCounter > 1 {
+            tapCounter -= 1
+            updateButtonUI()
+            removeFromCartAction?()
+        } else if tapCounter == 1 {
+            tapCounter -= 1
+            updateButtonUI()
+            removeFromCartAction?()
         }
     }
 }
