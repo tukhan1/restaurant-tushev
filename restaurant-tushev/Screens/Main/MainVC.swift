@@ -81,9 +81,9 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-//        fetchBanners()
-//        fetchChefRecommendations()
-//        fetchLoyalty()
+        fetchBanners()
+        fetchChefRecommendations()
+        fetchLoyalty()
     }
     
     // MARK: - Setup

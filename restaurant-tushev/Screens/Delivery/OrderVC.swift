@@ -40,7 +40,7 @@ final class OrderVC: UIViewController {
         super.viewDidLoad()
         configure()
         makeConstraints()
-//        getMenu()
+        getMenu()
     }
     
     override func viewWillAppear(_ animated: Bool) {
