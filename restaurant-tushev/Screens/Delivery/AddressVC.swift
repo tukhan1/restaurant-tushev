@@ -27,15 +27,7 @@ class AddressVC: UIViewController {
         super.viewDidLoad()
         setupLayout()
         setupAddButton()
-    }
-    
-    func prefill(with address: Address) {
-        nameTextField.text = address.name
-        streetTextField.text = address.street
-        houseNumberTextField.text = address.houseNumber
-        apartmentTextField.text = address.apartment
-        buildingTextField.text = address.building
-        intercomTextField.text = address.intercom
+        prefill()
     }
     // MARK: - Setup
     private func setupLayout() {
@@ -139,7 +131,25 @@ class AddressVC: UIViewController {
             }
         }
     }
-
+    
+    private func prefill() {
+        UserService.shared.fetchAddress { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success(let address):
+                DispatchQueue.main.async {
+                    self.nameTextField.text = address.name
+                    self.streetTextField.text = address.street
+                    self.houseNumberTextField.text = address.houseNumber
+                    self.apartmentTextField.text = address.apartment
+                    self.buildingTextField.text = address.building
+                    self.intercomTextField.text = address.intercom
+                }
+            case .failure(_):
+                print("нет данных")
+            }
+        }
+    }
     
     @objc private func textFieldChanged() {
         addButton.isEnabled = !nameTextField.text!.isEmpty && !streetTextField.text!.isEmpty && !houseNumberTextField.text!.isEmpty && !apartmentTextField.text!.isEmpty

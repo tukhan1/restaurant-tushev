@@ -78,6 +78,7 @@ class BookingVC: UIViewController {
             switch result {
             case .success(_):
                 DispatchQueue.main.async {
+                    self?.navigationController?.popViewController(animated: true)
                     self?.presentAlert(withTitle: "Замечательно", message:  "Столик забронирован на \(reservation.date.formatted(date: .abbreviated, time: .shortened)) для \(reservation.numberOfGuests) гостей. В ближайшее время с вами свяжется наш менеджер, для подтверждения бронирования")
                 }
             case .failure(let error):

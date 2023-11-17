@@ -69,13 +69,21 @@ class MainVC: UIViewController {
     
     private let loyaltyView: LoyaltyView = LoyaltyView(frame: .zero)
     
+    convenience init(recommendations: [MasterClass], banners: [Banner], loyaltyPoints: Double) {
+        self.init()
+        self.chefRecommendations = recommendations
+        self.banners = banners
+        loyaltyView.setAmount(loyaltyPoints)
+        chefRecommendationTableView.reloadData()
+        bannerCollectionView.reloadData()
+    }
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        fetchBanners()
-        fetchChefRecommendations()
-        fetchLoyalty()
+//        fetchBanners()
+//        fetchChefRecommendations()
+//        fetchLoyalty()
     }
     
     // MARK: - Setup

@@ -25,8 +25,8 @@ final class ProductCell: UICollectionViewCell, ReusableView {
         imageView.layer.masksToBounds = true
         return imageView
     }()
-    private let productCostLabel = CustomLabel(font: .body, textAligment: .left)
-    private let productTitleLabel = CustomLabel(font: .body, textAligment: .left)
+    private let productCostLabel = CustomLabel(font: .heavyFont, textAligment: .left)
+    private let productTitleLabel = CustomLabel(font: .heavyFont, textAligment: .left)
     private let productWeightLabel = CustomLabel(font: .promt, textAligment: .left)
     private let buyButton: UIButton = {
         let button = UIButton(frame: .zero)

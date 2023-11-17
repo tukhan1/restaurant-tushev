@@ -18,7 +18,7 @@ final class UserService: FirestoreOperable {
     
     static let shared = UserService(auth: Auth.auth(), db: Firestore.firestore())
     
-    private init(auth: Auth, db: Firestore) {
+    init(auth: Auth, db: Firestore) {
         self.auth = auth
         self.db = db
     }
@@ -109,5 +109,17 @@ final class UserService: FirestoreOperable {
         guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
         let path = "\(K.users)/\(userId)/\(K.reservations)"
         saveData(collectionPath: path, documentId: reservation.id, data: reservation, merge: false, completion: completion)
+    }
+    
+    func fetchOrderHistory(completion: @escaping (Result<[Order], Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.orders)"
+        fetchCollection(collectionPath: path, resultType: Order.self, completion: completion)
+    }
+    
+    func fetchBookingHistory(completion: @escaping (Result<[Reservation], Error>) -> Void) {
+        guard let userId = userId else { completion(.failure(NWError.invalidURL)); return }
+        let path = "\(K.users)/\(userId)/\(K.reservations)"
+        fetchCollection(collectionPath: path, resultType: Reservation.self, completion: completion)
     }
 }

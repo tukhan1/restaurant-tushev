@@ -28,6 +28,41 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
+      <Testables>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "775584D22B02096900D2DE67"
+               BuildableName = "restaurantTests.xctest"
+               BlueprintName = "restaurantTests"
+               ReferencedContainer = "container:restaurant-tushev.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "777C0D0F2B04ABE300D28DBD"
+               BuildableName = "restaurant-tushevTests.xctest"
+               BlueprintName = "restaurant-tushevTests"
+               ReferencedContainer = "container:restaurant-tushev.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "777C0D002B04A8F900D28DBD"
+               BuildableName = "restaurant-tushevUITests.xctest"
+               BlueprintName = "restaurant-tushevUITests"
+               ReferencedContainer = "container:restaurant-tushev.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+      </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"

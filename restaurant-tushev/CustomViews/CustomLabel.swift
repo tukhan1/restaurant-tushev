@@ -8,12 +8,12 @@
 import UIKit
 
 enum LabelFonts {
-    case title1, title2, title3, title4, body, promt
+    case title1, title2, loyaltyFont, deliverFont, heavyFont, bigFont, body, promt
 }
 
 class CustomLabel: UILabel {
     
-    init(font: LabelFonts, textColor: UIColor = .black, textAligment: NSTextAlignment = .center, text: String = "") {
+    init(font: LabelFonts, textColor: UIColor = .label, textAligment: NSTextAlignment = .center, text: String = "") {
         super.init(frame: .zero)
         
         updateLabel(with: font)
@@ -30,14 +30,18 @@ class CustomLabel: UILabel {
             self.font = UIFont.systemFont(ofSize: 25, weight: .semibold)
         case .title2:
             self.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        case .title3:
+        case .loyaltyFont:
             self.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        case .title4:
+        case .deliverFont:
             self.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        case .heavyFont:
+            self.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        case .bigFont:
+            self.font = UIFont.systemFont(ofSize: 18, weight: .black)
         case .body:
             self.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         case .promt:
-            self.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+            self.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         }
     }
     

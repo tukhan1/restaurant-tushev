@@ -10,8 +10,8 @@ import SnapKit
 
 class DeliverView: UIView {
   
-    private let titleLabel = CustomLabel(font: .title4, textAligment: .center, text: "Оплатить и доставить")
-    private let totalPriceLabel = CustomLabel(font: .title4, textAligment: .right, text: "0 Р")
+    private let titleLabel = CustomLabel(font: .deliverFont, textAligment: .center, text: "Оплатить и доставить")
+    private let totalPriceLabel = CustomLabel(font: .deliverFont, textAligment: .right, text: "0 Р")
     
     override init(frame: CGRect) {
         super.init(frame: frame)

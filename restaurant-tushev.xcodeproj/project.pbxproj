@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		775584B92AFD319900D2DE67 /* LoyaltyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584B82AFD319900D2DE67 /* LoyaltyView.swift */; };
-		775584BC2AFD3BFE00D2DE67 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 775584BB2AFD3BFE00D2DE67 /* SkeletonView */; };
 		775584BE2AFFC8BF00D2DE67 /* DocumentSnapshot+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584BD2AFFC8BF00D2DE67 /* DocumentSnapshot+Ext.swift */; };
 		775584C02AFFCB2000D2DE67 /* FirestoreOperable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584BF2AFFCB2000D2DE67 /* FirestoreOperable.swift */; };
 		775584C32AFFD5BF00D2DE67 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 775584C22AFFD5BF00D2DE67 /* Kingfisher */; };
 		775584C52AFFE80E00D2DE67 /* PromoDitailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584C42AFFE80E00D2DE67 /* PromoDitailsVC.swift */; };
+		775584C82B01561700D2DE67 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584C72B01561700D2DE67 /* HistoryViewController.swift */; };
+		775584CA2B01562F00D2DE67 /* OrderHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584C92B01562F00D2DE67 /* OrderHistoryViewController.swift */; };
+		775584CC2B01563900D2DE67 /* BookingHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584CB2B01563900D2DE67 /* BookingHistoryViewController.swift */; };
+		775584CE2B015D9300D2DE67 /* UIApplication+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 775584CD2B015D9300D2DE67 /* UIApplication+Ext.swift */; };
 		7777AFF82AE920A6005F8573 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777AFF72AE920A6005F8573 /* CustomLabel.swift */; };
 		7777AFFA2AE9221C005F8573 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777AFF92AE9221C005F8573 /* Constants.swift */; };
 		7777AFFE2AE92523005F8573 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777AFFD2AE92523005F8573 /* UIView+Ext.swift */; };
@@ -50,6 +53,10 @@
 		7777B0482AEBA3A3005F8573 /* UIColletionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777B0472AEBA3A3005F8573 /* UIColletionView+Ext.swift */; };
 		7777B04A2AEED9AB005F8573 /* DTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777B0492AEED9AB005F8573 /* DTO.swift */; };
 		7777B04F2AEEDEC8005F8573 /* RestaurantService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7777B04E2AEEDEC8005F8573 /* RestaurantService.swift */; };
+		777C0D132B04ABE300D28DBD /* restaurant_tushevTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C0D122B04ABE300D28DBD /* restaurant_tushevTests.swift */; };
+		777C0D1B2B04AC5A00D28DBD /* InlineSnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 777C0D1A2B04AC5A00D28DBD /* InlineSnapshotTesting */; };
+		777C0D1D2B04AC5A00D28DBD /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 777C0D1C2B04AC5A00D28DBD /* SnapshotTesting */; };
+		777C0D1F2B04ACB000D28DBD /* Tests+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 777C0D1E2B04ACB000D28DBD /* Tests+Ext.swift */; };
 		779F7BC62AE82BBE00B89127 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 779F7BC52AE82BBE00B89127 /* AppDelegate.swift */; };
 		779F7BCF2AE82BBF00B89127 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 779F7BCE2AE82BBF00B89127 /* Assets.xcassets */; };
 		779F7BD22AE82BBF00B89127 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 779F7BD02AE82BBF00B89127 /* LaunchScreen.storyboard */; };
@@ -77,11 +84,25 @@
 		77E9EBBA2AF6AA91003CB05D /* ChefRecommendationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77E9EBB92AF6AA91003CB05D /* ChefRecommendationCell.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		777C0D142B04ABE300D28DBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 779F7BBA2AE82BBE00B89127 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 779F7BC12AE82BBE00B89127;
+			remoteInfo = "restaurant-tushev";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		775584B82AFD319900D2DE67 /* LoyaltyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoyaltyView.swift; sourceTree = "<group>"; };
 		775584BD2AFFC8BF00D2DE67 /* DocumentSnapshot+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DocumentSnapshot+Ext.swift"; sourceTree = "<group>"; };
 		775584BF2AFFCB2000D2DE67 /* FirestoreOperable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreOperable.swift; sourceTree = "<group>"; };
 		775584C42AFFE80E00D2DE67 /* PromoDitailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoDitailsVC.swift; sourceTree = "<group>"; };
+		775584C72B01561700D2DE67 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		775584C92B01562F00D2DE67 /* OrderHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderHistoryViewController.swift; sourceTree = "<group>"; };
+		775584CB2B01563900D2DE67 /* BookingHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingHistoryViewController.swift; sourceTree = "<group>"; };
+		775584CD2B015D9300D2DE67 /* UIApplication+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Ext.swift"; sourceTree = "<group>"; };
 		7777AFF72AE920A6005F8573 /* CustomLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		7777AFF92AE9221C005F8573 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7777AFFD2AE92523005F8573 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
@@ -92,7 +113,10 @@
 		7777B0472AEBA3A3005F8573 /* UIColletionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColletionView+Ext.swift"; sourceTree = "<group>"; };
 		7777B0492AEED9AB005F8573 /* DTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTO.swift; sourceTree = "<group>"; };
 		7777B04E2AEEDEC8005F8573 /* RestaurantService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantService.swift; sourceTree = "<group>"; };
-		779F7BC22AE82BBE00B89127 /* restaurant-tushev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "restaurant-tushev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C0D102B04ABE300D28DBD /* restaurant-tushev.xcodeproj */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "restaurant-tushev.xcodeproj"; path = "../../../../../../../../Projects/restaurant-tushev/restaurant-tushev.xcodeproj"; sourceTree = BUILT_PRODUCTS_DIR; };
+		777C0D122B04ABE300D28DBD /* restaurant_tushevTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = restaurant_tushevTests.swift; sourceTree = "<group>"; };
+		777C0D1E2B04ACB000D28DBD /* Tests+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tests+Ext.swift"; sourceTree = "<group>"; };
+		779F7BC22AE82BBE00B89127 /* restaurant-tushev.xcodeproj */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "restaurant-tushev.xcodeproj"; path = "../../../../../../../../Projects/restaurant-tushev/restaurant-tushev.xcodeproj"; sourceTree = BUILT_PRODUCTS_DIR; };
 		779F7BC52AE82BBE00B89127 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		779F7BCE2AE82BBF00B89127 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		779F7BD12AE82BBF00B89127 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -120,6 +144,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		777C0D0D2B04ABE300D28DBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C0D1B2B04AC5A00D28DBD /* InlineSnapshotTesting in Frameworks */,
+				777C0D1D2B04AC5A00D28DBD /* SnapshotTesting in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		779F7BBF2AE82BBE00B89127 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -128,7 +161,6 @@
 				779F7C1B2AE911C000B89127 /* SnapKit in Frameworks */,
 				7777B0242AE93364005F8573 /* FirebaseFirestoreSwift in Frameworks */,
 				7777B00E2AE93364005F8573 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
-				775584BC2AFD3BFE00D2DE67 /* SkeletonView in Frameworks */,
 				7777B0262AE93364005F8573 /* FirebaseFunctions in Frameworks */,
 				779F7C1D2AE911C000B89127 /* SnapKit-Dynamic in Frameworks */,
 				7777B0082AE93364005F8573 /* FirebaseAnalytics in Frameworks */,
@@ -165,8 +197,18 @@
 			isa = PBXGroup;
 			children = (
 				7777B0412AEAA375005F8573 /* ProfileVC.swift */,
+				775584C72B01561700D2DE67 /* HistoryViewController.swift */,
+				775584C92B01562F00D2DE67 /* OrderHistoryViewController.swift */,
+				775584CB2B01563900D2DE67 /* BookingHistoryViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		775584E22B022F0100D2DE67 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7777AFFF2AE92603005F8573 /* Screens */ = {
@@ -208,6 +250,7 @@
 				77E9EBB12AF574C7003CB05D /* Money+Ext.swift */,
 				77DB47BF2AFA7A4B00A080C7 /* UIViewController+Ext.swift */,
 				775584BD2AFFC8BF00D2DE67 /* DocumentSnapshot+Ext.swift */,
+				775584CD2B015D9300D2DE67 /* UIApplication+Ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -233,18 +276,30 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		777C0D112B04ABE300D28DBD /* restaurant-tushevTests */ = {
+			isa = PBXGroup;
+			children = (
+				777C0D122B04ABE300D28DBD /* restaurant_tushevTests.swift */,
+				777C0D1E2B04ACB000D28DBD /* Tests+Ext.swift */,
+			);
+			path = "restaurant-tushevTests";
+			sourceTree = "<group>";
+		};
 		779F7BB92AE82BBE00B89127 = {
 			isa = PBXGroup;
 			children = (
 				779F7BC42AE82BBE00B89127 /* restaurant-tushev */,
+				777C0D112B04ABE300D28DBD /* restaurant-tushevTests */,
 				779F7BC32AE82BBE00B89127 /* Products */,
+				775584E22B022F0100D2DE67 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		779F7BC32AE82BBE00B89127 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				779F7BC22AE82BBE00B89127 /* restaurant-tushev.app */,
+				779F7BC22AE82BBE00B89127 /* restaurant-tushev.xcodeproj */,
+				777C0D102B04ABE300D28DBD /* restaurant-tushev.xcodeproj */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,7 +340,6 @@
 				77DB47C32AFAC18B00A080C7 /* AddressView.swift */,
 				77E9EBB52AF690BF003CB05D /* DeliverView.swift */,
 				775584B82AFD319900D2DE67 /* LoyaltyView.swift */,
-				775584C42AFFE80E00D2DE67 /* PromoDitailsVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,6 +347,7 @@
 		77C59F222AF5337100A31B32 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				775584C42AFFE80E00D2DE67 /* PromoDitailsVC.swift */,
 				77C59F162AF5168600A31B32 /* CustomTabBar.swift */,
 			);
 			path = Controllers;
@@ -321,6 +376,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		777C0D0F2B04ABE300D28DBD /* restaurant-tushevTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 777C0D162B04ABE300D28DBD /* Build configuration list for PBXNativeTarget "restaurant-tushevTests" */;
+			buildPhases = (
+				777C0D0C2B04ABE300D28DBD /* Sources */,
+				777C0D0D2B04ABE300D28DBD /* Frameworks */,
+				777C0D0E2B04ABE300D28DBD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				777C0D152B04ABE300D28DBD /* PBXTargetDependency */,
+			);
+			name = "restaurant-tushevTests";
+			packageProductDependencies = (
+				777C0D1A2B04AC5A00D28DBD /* InlineSnapshotTesting */,
+				777C0D1C2B04AC5A00D28DBD /* SnapshotTesting */,
+			);
+			productName = "restaurant-tushevTests";
+			productReference = 777C0D102B04ABE300D28DBD /* restaurant-tushev.xcodeproj */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		779F7BC12AE82BBE00B89127 /* restaurant-tushev */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 779F7BD62AE82BBF00B89127 /* Build configuration list for PBXNativeTarget "restaurant-tushev" */;
@@ -364,11 +441,10 @@
 				7777B0372AE93364005F8573 /* FirebaseRemoteConfigSwift */,
 				7777B0392AE93364005F8573 /* FirebaseStorage */,
 				7777B03B2AE93364005F8573 /* FirebaseStorageCombine-Community */,
-				775584BB2AFD3BFE00D2DE67 /* SkeletonView */,
 				775584C22AFFD5BF00D2DE67 /* Kingfisher */,
 			);
 			productName = "restaurant-tushev";
-			productReference = 779F7BC22AE82BBE00B89127 /* restaurant-tushev.app */;
+			productReference = 779F7BC22AE82BBE00B89127 /* restaurant-tushev.xcodeproj */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -381,6 +457,10 @@
 				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					777C0D0F2B04ABE300D28DBD = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = 779F7BC12AE82BBE00B89127;
+					};
 					779F7BC12AE82BBE00B89127 = {
 						CreatedOnToolsVersion = 15.0;
 					};
@@ -398,19 +478,27 @@
 			packageReferences = (
 				779F7C192AE911C000B89127 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				7777B0062AE93364005F8573 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
-				775584BA2AFD3BFE00D2DE67 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				775584C12AFFD5BF00D2DE67 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				777C0D192B04AC5A00D28DBD /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 779F7BC32AE82BBE00B89127 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				779F7BC12AE82BBE00B89127 /* restaurant-tushev */,
+				777C0D0F2B04ABE300D28DBD /* restaurant-tushevTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		777C0D0E2B04ABE300D28DBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		779F7BC02AE82BBE00B89127 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -424,6 +512,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		777C0D0C2B04ABE300D28DBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				777C0D132B04ABE300D28DBD /* restaurant_tushevTests.swift in Sources */,
+				777C0D1F2B04ACB000D28DBD /* Tests+Ext.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		779F7BBE2AE82BBE00B89127 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -435,11 +532,13 @@
 				77DB47C02AFA7A4B00A080C7 /* UIViewController+Ext.swift in Sources */,
 				77C59F172AF5168600A31B32 /* CustomTabBar.swift in Sources */,
 				77DB47BC2AF848E700A080C7 /* InputSectionView.swift in Sources */,
+				775584CC2B01563900D2DE67 /* BookingHistoryViewController.swift in Sources */,
 				77C59F0B2AF3F70F00A31B32 /* SectionHeader.swift in Sources */,
 				77C59F1F2AF5329100A31B32 /* ProductInCartCell.swift in Sources */,
 				775584BE2AFFC8BF00D2DE67 /* DocumentSnapshot+Ext.swift in Sources */,
 				7777B0422AEAA375005F8573 /* ProfileVC.swift in Sources */,
 				77DB47C22AFAB0F100A080C7 /* AddressVC.swift in Sources */,
+				775584CA2B01562F00D2DE67 /* OrderHistoryViewController.swift in Sources */,
 				77DB47BE2AFA6E6600A080C7 /* UserService.swift in Sources */,
 				7777B04F2AEEDEC8005F8573 /* RestaurantService.swift in Sources */,
 				7777B04A2AEED9AB005F8573 /* DTO.swift in Sources */,
@@ -448,6 +547,7 @@
 				7777B0462AEAA714005F8573 /* ProductCell.swift in Sources */,
 				77DB47C42AFAC18B00A080C7 /* AddressView.swift in Sources */,
 				77E9EBB22AF574C7003CB05D /* Money+Ext.swift in Sources */,
+				775584CE2B015D9300D2DE67 /* UIApplication+Ext.swift in Sources */,
 				775584C02AFFCB2000D2DE67 /* FirestoreOperable.swift in Sources */,
 				77E9EBB62AF690BF003CB05D /* DeliverView.swift in Sources */,
 				7777B0442AEAA508005F8573 /* UIHelper.swift in Sources */,
@@ -461,11 +561,20 @@
 				7777AFF82AE920A6005F8573 /* CustomLabel.swift in Sources */,
 				77C59F1D2AF52DD700A31B32 /* CartVC.swift in Sources */,
 				775584B92AFD319900D2DE67 /* LoyaltyView.swift in Sources */,
+				775584C82B01561700D2DE67 /* HistoryViewController.swift in Sources */,
 				7777B03E2AEAA0FC005F8573 /* OrderVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		777C0D152B04ABE300D28DBD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 779F7BC12AE82BBE00B89127 /* restaurant-tushev */;
+			targetProxy = 777C0D142B04ABE300D28DBD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		779F7BD02AE82BBF00B89127 /* LaunchScreen.storyboard */ = {
@@ -479,6 +588,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		777C0D172B04ABE300D28DBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H7H9P2C2C5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Egor-Tushev.restaurant-tushevTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/restaurant-tushev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/restaurant-tushev";
+			};
+			name = Debug;
+		};
+		777C0D182B04ABE300D28DBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = H7H9P2C2C5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Egor-Tushev.restaurant-tushevTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/restaurant-tushev.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/restaurant-tushev";
+			};
+			name = Release;
+		};
 		779F7BD42AE82BBF00B89127 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -665,6 +812,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		777C0D162B04ABE300D28DBD /* Build configuration list for PBXNativeTarget "restaurant-tushevTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				777C0D172B04ABE300D28DBD /* Debug */,
+				777C0D182B04ABE300D28DBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		779F7BBD2AE82BBE00B89127 /* Build configuration list for PBXProject "restaurant-tushev" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -686,14 +842,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		775584BA2AFD3BFE00D2DE67 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.30.4;
-			};
-		};
 		775584C12AFFD5BF00D2DE67 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -710,6 +858,14 @@
 				minimumVersion = 10.16.0;
 			};
 		};
+		777C0D192B04AC5A00D28DBD /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.15.0;
+			};
+		};
 		779F7C192AE911C000B89127 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -721,11 +877,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		775584BB2AFD3BFE00D2DE67 /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 775584BA2AFD3BFE00D2DE67 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
-		};
 		775584C22AFFD5BF00D2DE67 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 775584C12AFFD5BF00D2DE67 /* XCRemoteSwiftPackageReference "Kingfisher" */;
@@ -865,6 +1016,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7777B0062AE93364005F8573 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		777C0D1A2B04AC5A00D28DBD /* InlineSnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 777C0D192B04AC5A00D28DBD /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = InlineSnapshotTesting;
+		};
+		777C0D1C2B04AC5A00D28DBD /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 777C0D192B04AC5A00D28DBD /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
 		};
 		779F7C1A2AE911C000B89127 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;

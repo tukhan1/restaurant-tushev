@@ -30,19 +30,17 @@ final class OrderVC: UIViewController {
         return collectionView
     }()
     
-    private func updateMiniCartView() {
-        if cartManager.itemsCount > 0 {
-            miniCartView.isHidden = false
-        } else {
-            miniCartView.isHidden = true
-        }
+    convenience init(menu: [MenuSection]) {
+        self.init()
+        self.menuData = menu
+        collectionView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
         makeConstraints()
-        getMenu()
+//        getMenu()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,6 +76,14 @@ final class OrderVC: UIViewController {
         let cartVC = CartVC(cartManager: cartManager)
         cartVC.delegate = self
         navigationController?.pushViewController(cartVC, animated: true)
+    }
+    
+    private func updateMiniCartView() {
+        if cartManager.itemsCount > 0 {
+            miniCartView.isHidden = false
+        } else {
+            miniCartView.isHidden = true
+        }
     }
     
     private func makeConstraints() {

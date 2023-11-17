@@ -23,3 +23,8 @@ enum K {
     static let reservations = "reservations"
     static let reservation = "reservation"
 }
+
+enum AppInfo {
+    static let appName = "RESTAURANT TUSHEV"
+    static let appIcon = UIImage(named: "AppIcon")!
+}

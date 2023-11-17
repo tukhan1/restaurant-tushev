@@ -15,7 +15,7 @@ class LoyaltyView: UIView {
         return imageView
     }()
     private let titleLabel: CustomLabel = CustomLabel(font: .title2, textAligment: .left, text: "Карта лояльности")
-    private let amountLabel: CustomLabel = CustomLabel(font: .title3, textColor: .darkBrown, textAligment: .center)
+    private let amountLabel: CustomLabel = CustomLabel(font: .loyaltyFont, textColor: .darkBrown, textAligment: .center)
     
     override init(frame: CGRect) {
         super.init(frame: .zero)

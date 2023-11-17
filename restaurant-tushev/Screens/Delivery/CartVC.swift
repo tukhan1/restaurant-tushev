@@ -10,7 +10,6 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: CartVCDelegate?
     
     private let cartManager: CartManager
-    private var currentAddress: Address?
     private var loyaltyPoints: Double?
     private var loyaltyPointsUsed: Double?
     
@@ -53,7 +52,6 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             case .success(let address):
                 DispatchQueue.main.async {
                     self?.addressView.setUp(with: address)
-                    self?.currentAddress = address
                 }
             case .failure(_):
                 print("нет данных")
@@ -182,7 +180,6 @@ class CartVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @objc private func addressTapped() {
         let addressVC = AddressVC()
-        if let address = currentAddress { addressVC.prefill(with: address) }
         addressVC.onSave = { [weak self] address in
             self?.addressView.setUp(with: address)
         }

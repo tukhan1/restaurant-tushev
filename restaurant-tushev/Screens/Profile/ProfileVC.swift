@@ -1,5 +1,6 @@
 import UIKit
 import SnapKit
+import StoreKit
 
 class ProfileVC: UIViewController {
     
@@ -48,13 +49,11 @@ class ProfileVC: UIViewController {
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
             make.centerX.equalToSuperview()
         }
-        
         tableView.snp.makeConstraints { make in
             make.top.equalTo(phoneNumberLabel.snp.bottom).offset(20)
             make.left.right.equalTo(view)
             make.bottom.equalTo(signOutButton.snp.top).offset(-20)
         }
-
         signOutButton.snp.makeConstraints { make in
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-20)
             make.centerX.equalToSuperview()
@@ -112,7 +111,7 @@ class ProfileVC: UIViewController {
 extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -128,8 +127,17 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = "История бронирования"
             cell.imageView?.image = UIImage(systemName: "calendar")
         case 2:
-            cell.textLabel?.text = "Мои адреса"
+            cell.textLabel?.text = "Адрес"
             cell.imageView?.image = UIImage(systemName: "map")
+        case 3:
+            cell.textLabel?.text = "Поддержка"
+            cell.imageView?.image = UIImage(systemName: "headphones")
+        case 4:
+            cell.textLabel?.text = "Оценить"
+            cell.imageView?.image = UIImage(systemName: "star")
+        case 5:
+            cell.textLabel?.text = "Поделиться приложением"
+            cell.imageView?.image = UIImage(systemName: "square.and.arrow.up.circle")
         default:
             break
         }
@@ -142,5 +150,41 @@ extension ProfileVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            let viewController = OrderHistoryViewController()
+            navigationController?.pushViewController(viewController, animated: true)
+        case 1:
+            let viewController = BookingHistoryViewController()
+            navigationController?.pushViewController(viewController, animated: true)
+        case 2:
+            let viewController = AddressVC()
+            navigationController?.pushViewController(viewController, animated: true)
+        case 3:
+            emailTo(support: "support@sup.com")
+        case 4:
+            guard let scene = UIApplication.shared.foregroundActiveScene else { return }
+            SKStoreReviewController.requestReview(in: scene)
+        case 5:
+            shareApp(title: AppInfo.appName, url: "")
+        default:
+            return
+        }
+    }
+    
+    private func emailTo(support adress: String) {
+        if let url = URL(string: "mailto:\(adress)") {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    private func shareApp(title text: String, url: String) {
+        let firstActivityItem = text
+        let secondActivityItem : NSURL = NSURL(string: url) ?? NSURL()
+        
+        let image : UIImage = AppInfo.appIcon
+        let activityViewController : UIActivityViewController = UIActivityViewController(
+            activityItems: [firstActivityItem, secondActivityItem, image], applicationActivities: nil)
+        self.present(activityViewController, animated: true, completion: nil)
     }
 }

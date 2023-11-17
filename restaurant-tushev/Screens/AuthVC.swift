@@ -80,7 +80,6 @@ class AuthVC: UIViewController {
             return
         }
         
-        
         appDelegate.window?.rootViewController = mainController
         appDelegate.window?.makeKeyAndVisible()
     }
@@ -161,4 +160,3 @@ class AuthVC: UIViewController {
         }
     }
 }
-
